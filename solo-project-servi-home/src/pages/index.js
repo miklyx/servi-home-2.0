@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import Link from "next/link";
 
 
-
 export default function Home() {
 
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function Home() {
           <Link href="/signup">Schedule your <br /> cleaner</Link>
         </button>
         </div>
-        <img src="/path/to/your/image.jpg" alt="Cleaning Image"/>
+        <img src="/cleaning.png" alt="Logo" width={650} height={650} />
       </div>
      
       <div className="bg-zinc-500 p-5 text-white">
