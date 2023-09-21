@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Import the useRouter hook for redirection
 
 function Login() {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
+
+  const router = useRouter(); // Initialize the router
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +18,28 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here, you can send the form data to your server or perform other actions.
-    console.log(formData);
+
+    try {
+      // Send the form data to your server for authentication
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.status === 200) {
+        // Assuming a successful login, redirect to the logedin page
+        router.push("/logedin");
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -47,10 +67,17 @@ function Login() {
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
             />
           </div>
-         
-            <Link href="/logedin" type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Login </Link>
-           
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Login
+          </button>
         </form>
+        <p>
+          Don't have an account?{" "}
+          <Link href="/signup">Sign Up</Link>
+        </p>
       </div>
     </div>
   );

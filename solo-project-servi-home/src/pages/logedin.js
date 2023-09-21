@@ -69,6 +69,7 @@ function Logedin () {
                 value={material}
                 onChange={(e) => setMaterial(e.target.value)}
                 className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+                required
             />
             <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer "
             onClick={() => setSelectedService('Revitalize Your Rugs')}
@@ -100,6 +101,7 @@ function Logedin () {
             value={condition}
             onChange={(e) => setCondition(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+            required
             >
             <option value="Options">Options</option>
             <option value="Stained">Stained</option>
@@ -165,7 +167,7 @@ function Logedin () {
             <p className="text-xs">A cleaner proposal will be sent to you, as soon as posible you will obtain an email for confirmation</p>
             <button className='border border-black bg-transparent text-white hover:bg-blue-500 py-2 px-4 rounded m-4'>Send to cleaner</button>
             </div>
-            
+
             )}
             
         </div>

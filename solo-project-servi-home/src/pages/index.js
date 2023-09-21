@@ -1,18 +1,7 @@
-import { useEffect } from 'react'
 import Link from "next/link";
 
 
 export default function Home() {
-
-  useEffect(() => {
-    // Fetch reviews from your server's API route
-    (async () => {
-      const response = await fetch('/api/hello')
-      .then((response) => response.json())
-      console.log(response)
-    })()
-  }, []);
-
 
   return (
     <div>
