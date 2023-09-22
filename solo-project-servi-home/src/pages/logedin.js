@@ -16,7 +16,7 @@ function Logedin () {
       e.preventDefault();
       setServices((prevServices) => [
         ...prevServices,
-        { title: selectedService, rugmeasure, measure, rugcondition, condition, material, servicetable},
+        { title: selectedService, rugmeasure, rugcondition, measure, condition, material, servicetable},
       ]);
       setRugmeasure('');
       setRugcondition('');

@@ -2,14 +2,14 @@ import { db } from "src/lib/db";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { title, name, content } = req.body;
+    const { measure, condition, material } = req.body;
 
     try {
       const review = await db.review.create({
         data: {
-          title,
-          name,
-          content,
+          measure,
+          condition,
+          material,
         },
       });
 
@@ -30,4 +30,3 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
-

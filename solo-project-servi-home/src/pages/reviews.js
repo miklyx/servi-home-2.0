@@ -1,19 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 function ReviewForm() {
   const [reviews, setReviews] = useState([]);
-  const [title, setTitle] = useState('');
-  const [name, setName] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const response = await fetch("/api/reviews");
+        const data = await response.json();
+  
+        
+        if (Array.isArray(data)) {
+          setReviews(data);
+        } else {
+          console.error("Received non-array data:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    }
+    fetchReviews();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setReviews((r) => [...r, { title, name, content }]);
-    setTitle('');
-    setName('');
-    setContent('');
+  
+    try {
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, name, content }),
+      });
+  
+      if (response.status === 201) {
+        const data = await response.json();
+        setReviews([...reviews, data.review]);
+        setTitle('');
+        setName('');
+        setContent('');
+      } else {
+        console.error('Failed to create review');
+      }
+    } catch (error) {
+      console.error('Error creating review:', error);
+    }
   };
-
+  
   return (
     <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 min-h-screen flex flex-col items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md max-w-md">
@@ -26,7 +63,7 @@ function ReviewForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-            required // Make this input required
+            required 
           />
         </div>
         <div className="mb-4">
@@ -37,7 +74,7 @@ function ReviewForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-            required // Make this input required
+            required 
           />
         </div>
         <div className="mb-4">
@@ -47,7 +84,7 @@ function ReviewForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 h-32"
-            required // Make this input required
+            required 
           ></textarea>
         </div>
         <button

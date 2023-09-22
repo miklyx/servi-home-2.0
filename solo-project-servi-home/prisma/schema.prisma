@@ -53,3 +53,11 @@ model Cleaner {
   password String
   createdAt DateTime @default(now())
 }
+
+model Review {
+  id String @id @default(uuid())
+  title String
+  name String
+  content String
+  createdAt DateTime @default(now())
+}
