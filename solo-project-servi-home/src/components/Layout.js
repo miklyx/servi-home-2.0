@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 const Layout = ({ children }) => {
+  //get user syate from context
+  // change with user state the <Link> signup
   return (
     <div>
       <header className="bg-zinc-500 p-6 flex justify-between items-center">
@@ -10,7 +12,7 @@ const Layout = ({ children }) => {
           <Link href="/reviews">Reviews</Link>
           <Link href="/services">Services</Link>
           <Link href="/cleanersignup">Cleaner</Link>
-          <Link href="/signup">Sign Up</Link>
+          <Link href="/signup">Sign Up</Link> 
         </nav>
       </header>
       <main>{children}</main>

@@ -62,6 +62,7 @@ function SignUp() {
               value={formData.username}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <div className="mb-4">
@@ -72,6 +73,7 @@ function SignUp() {
               value={formData.email}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <div className="mb-4">
@@ -82,6 +84,7 @@ function SignUp() {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <button

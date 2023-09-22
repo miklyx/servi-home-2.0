@@ -128,7 +128,7 @@ function Logedin () {
             <option value="Paint">Paint</option>
             </select>
             
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={() => setSelectedService('Renew Your Furniture')} >+</button>
+            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={() => setSelectedService('Elevate Your Tabletops')} >+</button>
         </form>
             </div>
 

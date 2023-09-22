@@ -17,4 +17,39 @@ model User {
   email    String @unique
   password String 
   createdAt DateTime @default(now())
+  furniture Furniture[] 
+  rug Rug[]
+  table Table[]
+}
+
+model Furniture {
+  id String @id @default(uuid())
+  seats String
+  condition String 
+  userid String
+  user User @relation(fields: [userid], references: [id])
+}
+
+model Rug {
+  id String @id @default(uuid())
+  seats String
+  condition String 
+  userid String
+  user User @relation(fields: [userid], references: [id])
+}
+
+model Table {
+  id String @id @default(uuid())
+  seats String
+  condition String 
+  userid String
+  user User @relation(fields: [userid], references: [id])
+}
+
+model Cleaner {
+  id String @id @default(uuid())
+  username   String @unique
+  email    String @unique
+  password String
+  createdAt DateTime @default(now())
 }
