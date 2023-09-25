@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from 'next/router';
+import { useAuth } from "../lib/store";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,6 +12,8 @@ function SignUp() {
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,11 +35,18 @@ function SignUp() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.status === 201) {
         setSuccess(true);
         setError(null);
+
+        localStorage.setItem('token', JSON.stringify(data.token));
+        localStorage.setItem('auth', JSON.stringify(data.user));
+        useAuth.getState().setAuth(data.user)
+
+        router.push('/logedin');
       } else {
-        const data = await response.json();
         setError(data.error || "An error occurred during registration.");
         setSuccess(false);
       }

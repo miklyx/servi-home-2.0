@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router"; // Import the useRouter hook for redirection
 
-function Cleanerlogin() {
+function Login() {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState(null);
+
+  const router = useRouter(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,10 +20,33 @@ function Cleanerlogin() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here, you can send the form data to your server or perform other actions.
-    console.log(formData);
+
+    try {
+      // Send the form data to your server for authentication
+      const response = await fetch("/api/cleanerlogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      localStorage.setItem("auth", JSON.stringify(data));
+
+      if (response.status === 200) {
+        
+        router.push("/cleanerlogedin");
+      } else {
+        const data = await response.json();
+        setError(data.error || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      setError("An unexpected error occurred. Please try again.");
+    }
   };
 
   return (
@@ -34,6 +62,7 @@ function Cleanerlogin() {
               value={formData.email}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <div className="mb-4">
@@ -44,8 +73,10 @@ function Cleanerlogin() {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
+          {error && <p className="text-red-600 mb-4">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
@@ -53,9 +84,13 @@ function Cleanerlogin() {
             Login
           </button>
         </form>
+        <p>
+          Don't have an account?{" "}
+          <Link href="/cleanersignup">Sign Up</Link>
+        </p>
       </div>
     </div>
   );
 }
 
-export default Cleanerlogin;
+export default Login;

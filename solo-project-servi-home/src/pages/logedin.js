@@ -10,14 +10,45 @@ function Logedin () {
     const [material, setMaterial] = useState('');
     const [servicetable, setServicetable] = useState('');
     const [address, setAddress] = useState('');
-    const [selectedService, setSelectedService] = useState(null);
 
-    const handleSubmit = (e) => {
+    const addService = (service) => {
+      setServices([...services, service]);
+    };
+
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      setServices((prevServices) => [
-        ...prevServices,
-        { title: selectedService, rugmeasure, rugcondition, measure, condition, material, servicetable},
-      ]);
+      const localAuthData = localStorage.getItem("auth");
+      const auth = JSON.parse(localAuthData);
+      console.log(auth);
+
+      const response = await fetch('/api/logedin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          services: services,
+          address: address,
+          userId: auth.id, // sending the user's ID
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        setServices([]);
+        setRugmeasure('');
+        setRugcondition('');
+        setMeasure('');
+        setCondition('');
+        setMaterial('');
+        setServicetable('');
+        setAddress('');
+      } else {
+        alert('Error: ' + data.message);
+      }
+
       setRugmeasure('');
       setRugcondition('');
       setMeasure('');
@@ -36,7 +67,7 @@ function Logedin () {
         <div className="overflow-x-auto">
           <div className="flex space-x-6">
             
-          <form onSubmit={handleSubmit} className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
+          <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
             <h3 className="text-xl mb-4 font-semibold">Revitalize Your Rugs</h3>
             <p className="text-sm mb-6">
             Remove dirt, stains, and odors with precision. Advanced techniques and eco-friendly solutions. We restore the beauty and freshness of your rugs.
@@ -72,13 +103,24 @@ function Logedin () {
                 required
             />
             <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer "
-            onClick={() => setSelectedService('Revitalize Your Rugs')}
+            onClick={(e) => {
+              e.preventDefault()
+                  addService({
+                    title: 'Revitalize Your Rugs',
+                    rugmeasure,
+                    rugcondition,
+                    measure: '',
+                    condition: '',
+                    material,
+                    servicetable: ''
+                  });
+                }}
             >
               +
             </button>
         </form>
       
-        <form onSubmit={handleSubmit} className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
+        <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
             <h3 className="text-xl mb-4 font-semibold">Renew Your Furniture</h3>
             <p className="text-sm mb-6">
             We go beyond surface cleaning, tackling deep-seated stains and allergens. Furniture will look fantastic also feeling fresh and inviting.
@@ -108,10 +150,21 @@ function Logedin () {
             <option value="Dirt">Dirt</option>
             <option value="Fabric change">Fabric change</option>
             </select>
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={() => setSelectedService('Renew Your Furniture')} >+</button>
+            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={(e) => {
+              e.preventDefault()
+                  addService({
+                    title: 'Revitalize Your Rugs',
+                    rugmeasure,
+                    rugcondition,
+                    measure: '',
+                    condition: '',
+                    material,
+                    servicetable: ''
+                  });
+                }} >+</button>
         </form>
 
-        <form onSubmit={handleSubmit} className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
+        <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
             <h3 className="text-xl mb-4 font-semibold">Elevate Your Tabletops</h3>
             <p className="text-sm mb-6">
             We enhance your tables, making them stunning focal points by emphasizing the wood's richness with a lustrous finish.
@@ -128,7 +181,19 @@ function Logedin () {
             <option value="Paint">Paint</option>
             </select>
             
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={() => setSelectedService('Elevate Your Tabletops')} >+</button>
+            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={(e) => {
+              e.preventDefault()
+                  addService({
+                    title: 'Revitalize Your Rugs',
+                    rugmeasure,
+                    rugcondition,
+                    measure: '',
+                    condition: '',
+                    material,
+                    servicetable: ''
+                  });
+                }}
+                 >+</button>
         </form>
             </div>
 
@@ -165,7 +230,7 @@ function Logedin () {
                 required
             />
             <p className="text-xs">A cleaner proposal will be sent to you, as soon as posible you will obtain an email for confirmation</p>
-            <button className='border border-black bg-transparent text-white hover:bg-blue-500 py-2 px-4 rounded m-4'>Send to cleaner</button>
+            <button className='border border-black bg-transparent text-white hover:bg-blue-500 py-2 px-4 rounded m-4' onClick={(e) => handleSubmit(e)}>Send to cleaner</button>
             </div>
 
             )}

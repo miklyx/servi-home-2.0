@@ -1,12 +1,18 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from 'next/router';
 
-function Cleaner() {
+function CleanerSignUp() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,16 +22,47 @@ function Cleaner() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here, you can send the form data to your server or perform other actions.
-    console.log(formData);
+
+    try {
+      const response = await fetch("/api/cleanersignup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        setSuccess(true);
+        setError(null);
+
+        // Save the token, for the sake of this example, we'll use local storage
+        localStorage.setItem('token', data.token);
+
+        // Redirect the user to the dashboard or some main page
+        router.push('/cleanerlogedin');
+      } else {
+        setError(data.error || "An error occurred during registration.");
+        setSuccess(false);
+      }
+    } catch (error) {
+      setError("An error occurred during registration.");
+      setSuccess(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-80">
         <h2 className="text-2xl font-semibold mb-4">Cleaner Sign Up</h2>
+        {success && (
+          <p className="text-green-600 mb-4">Registration successful.</p>
+        )}
+        {error && <p className="text-red-600 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-600">Username:</label>
@@ -35,6 +72,7 @@ function Cleaner() {
               value={formData.username}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <div className="mb-4">
@@ -45,6 +83,7 @@ function Cleaner() {
               value={formData.email}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <div className="mb-4">
@@ -55,6 +94,7 @@ function Cleaner() {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+              required
             />
           </div>
           <button
@@ -64,12 +104,12 @@ function Cleaner() {
             Sign Up
           </button>
           <p>
-            <Link href="/cleanerlogin" > Have a cleaner account / Login </Link>
-            </p>
+            <Link href="/cleanerlogin">Have a user account? Login</Link>
+          </p>
         </form>
       </div>
     </div>
   );
 }
 
-export default Cleaner;
+export default CleanerSignUp;

@@ -52,9 +52,9 @@ function ReviewForm() {
   };
   
   return (
-    <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 min-h-screen flex flex-col items-center justify-center">
+    <div className="bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen flex flex-col items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Create a New Review</h2>
+        <h2 className="text-2xl font-semibold mb-4">Submit Your Review</h2>
         <div className="mb-4">
           <label className="text-gray-600">*Title:</label>
           <input
@@ -78,7 +78,7 @@ function ReviewForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="text-gray-600">*Content:</label>
+          <label className="text-gray-600">*Review Content:</label>
           <textarea
             name="content"
             value={content}
@@ -91,15 +91,15 @@ function ReviewForm() {
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
-          Submit
+          Submit Review
         </button>
       </form>
-      <div className="flex flex-col gap-4 mt-8">
+      <div className="flex flex-col gap-4 mt-8 w-full max-w-2xl">
         {reviews.map((review, index) => (
-          <div key={index} className="bg-blue-300 p-4 rounded shadow-md m-4">
+          <div key={index} className="bg-white p-4 rounded shadow-md m-4 border border-gray-200">
             <h3 className="text-xl font-semibold mb-2">{review.title}</h3>
-            <p className="text-gray-700">{review.name}</p>
-            <p className="text-gray-700">{review.content}</p>
+            <p className="text-gray-700 font-medium">{review.name}</p>
+            <p className="text-gray-700 mt-2">{review.content}</p>
           </div>
         ))}
       </div>

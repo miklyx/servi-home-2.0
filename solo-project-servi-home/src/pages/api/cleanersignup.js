@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     try {
       const hashedPassword = await hash(password, 10);
 
-      const user = await db.user.create({
+      const cleaner = await db.cleaner.create({
         data: {
           username,
           email,
@@ -20,9 +20,9 @@ export default async function handler(req, res) {
         select: { id: true, email: true, username: true } // Explicitly select fields
       });
 
-      const token = sign({ userId: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
+      const token = sign({ cleanerId: cleaner.id, role: cleaner.role }, secretKey, { expiresIn: "1h" });
 
-      res.status(201).json({ message: 'User registered successfully', user, token });
+      res.status(201).json({ message: 'User registered successfully', cleaner, token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Unable to register user' });
@@ -31,4 +31,3 @@ export default async function handler(req, res) {
     res.status(405).json({ error: 'Method not allowed' });
   }
 }
-  

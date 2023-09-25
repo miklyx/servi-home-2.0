@@ -9,20 +9,20 @@ export default async function handler(req, res) {
     const { email, password } = req.body;
 
     try {
-      const user = await db.user.findUnique({
+      const cleaner = await db.cleaner.findUnique({
         where: { email },
         select: { id: true, email: true, username: true, password: true } // Explicitly select fields
       });
 
-      if (!user || !await compare(password, user.password)) {
+      if (!cleaner || !await compare(password, cleaner.password)) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      const token = sign({ userId: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
+      const token = sign({ userId: cleaner.id, role: cleaner.role }, secretKey, { expiresIn: "1h" });
 
       // Destructure to avoid sending password
-      const { password: _, ...userWithoutPassword } = user;
-      res.status(200).json({ message: 'User authenticated successfully', user: userWithoutPassword, token });
+      const { password: _, ...cleanerWithoutPassword } = cleaner;
+      res.status(200).json({ message: 'User authenticated successfully', cleaner: cleanerWithoutPassword, token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Authentication failed' });

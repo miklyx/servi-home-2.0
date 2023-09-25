@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router"; // Import the useRouter hook for redirection
+import { useAuth } from "../lib/store";
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState(null);
 
   const router = useRouter(); // Initialize the router
 
@@ -31,14 +34,20 @@ function Login() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+      localStorage.setItem("auth", JSON.stringify(data.user));
+      useAuth.getState().setAuth(data.user)
+
       if (response.status === 200) {
-        // Assuming a successful login, redirect to the logedin page
+        
         router.push("/logedin");
       } else {
-        console.error("Login failed");
+        const data = await response.json();
+        setError(data.error || "Login failed");
       }
     } catch (error) {
       console.error("Login failed:", error);
+      setError("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -69,6 +78,7 @@ function Login() {
               required
             />
           </div>
+          {error && <p className="text-red-600 mb-4">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
