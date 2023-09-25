@@ -5,7 +5,7 @@ export default function Service () {
 
     return (
 
-<div className="bg-zinc-400 p-5 flex flex-col text-black items-center">
+<div className="bg-zinc-400 p-5 flex flex-col text-black h-screen items-center">
     <h2 className="text-6xl text-white mb-6 text-center font-serif">Services</h2>
     <div className="flex justify-around w-full">
     <div className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/3 relative text-black flex flex-col items-center justify-center">

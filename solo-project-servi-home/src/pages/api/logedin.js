@@ -17,11 +17,17 @@ export default async (req, res) => {
       },
     });
     
-
-    const bookingsData = []; // to collect all bookings data
+    const booking = await prisma.booking.create({
+      data: {
+        userId: userId,
+        addressId: createdAddress.id,
+        status: "PENDING"
+      }
+    });
 
     for(let service of services) {
       const serviceData = {
+        bookingId: booking.id,
         type: service.title,
         description: JSON.stringify([
           { attribute: "rugmeasure", value: service.rugmeasure },
@@ -33,21 +39,8 @@ export default async (req, res) => {
       ]),
       };
 
-      const createdService = await prisma.service.create({ data: serviceData });
-      
-
-      const bookingData = {
-        userId: userId,
-        serviceId: createdService.id,
-        addressId: createdAddress.id,
-        status: "PENDING"
-      };
-
-      bookingsData.push(bookingData);
+      await prisma.service.create({ data: serviceData });
     }
-
-    // Create all bookings at once
-    await prisma.booking.createMany({ data: bookingsData });
 
     return res.status(200).json({ message: 'Order successfully saved!' });
   } catch (error) {

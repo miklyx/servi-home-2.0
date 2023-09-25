@@ -32,7 +32,7 @@ function Logedin () {
         body: JSON.stringify({
           services: services,
           address: address,
-          userId: auth.id, // sending the user's ID
+          userId: auth.id, 
         }),
       });
 

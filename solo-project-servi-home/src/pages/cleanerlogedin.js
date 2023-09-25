@@ -20,22 +20,76 @@ function CleanerLogedin() {
     fetchBookings();
   }, []);
 
+  const acceptBooking = async (bookingId) => {
+    try {
+        const response = await fetch('/api/updateBookingStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ bookingId })
+        });
+
+        if (response.ok) {
+          const updatedBooking = await response.json();
+          setBookings(prevBookings => 
+              prevBookings.map(booking => 
+                  booking.id === updatedBooking.id ? updatedBooking : booking
+              )
+          );
+        } else {
+            const data = await response.json();
+            alert('Error updating booking status: ' + data.message);
+        }
+    } catch (error) {
+        alert('Failed to update booking status: ' + error.message);
+    }
+  };
+
   return (
-    <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 p-5 text-white">
-      <h2 className="text-4xl mb-5 font-semibold">Cleaner - Bookings</h2>
-      <div className="overflow-x-auto">
-        {bookings.map((booking, index) => (
-          <div key={index} className="m-4 border border-black p-6 rounded-lg relative">
-            <h3 className="text-lg font-semibold mb-2">Booking #{index + 1}</h3>
-            <p className="text-gray-700">User: {booking.user.name}</p>
-            <p className="text-gray-700">Address: {booking.address.detail}</p>
-            <p className="text-gray-700">Service: {booking.service.type}</p>
-            <p className="text-gray-700">Status: {booking.status}</p>
+    <div className="bg-gradient-to-b from-yellow-400 via-yellow-300 to-zinc-400 p-8 text-gray-900">
+  <h2 className="text-4xl mb-8 font-bold">Cleaner - Bookings</h2>
+  <div className="overflow-x-auto">
+    {bookings.map((booking, index) => {
+      return (
+        <div key={index} className="bg-white m-4 shadow-lg border p-6 rounded-lg relative">
+          <h3 className="text-2xl font-semibold mb-4">Booking #{index + 1}</h3>
+          <p className="mb-2 font-medium text-gray-700">User: {booking.user.username}</p>
+          <p className="mb-4 font-medium text-gray-700">Address: {booking.address.detail}</p>
+          <div className="mb-4">
+            <strong className="text-xl">Services:</strong>
+            {booking.services.map((service, idx) => (
+              <div key={idx} className="mt-2 text-gray-800">
+                <strong className="text-lg underline">{service.type}</strong>
+                <ul className="list-disc list-inside pl-5">
+                  {JSON.parse(service.description).map((descItem, descIdx) => (
+                    descItem.value ? (
+                      <li key={descIdx} className="mt-1">
+                        {descItem.attribute}: {descItem.value}
+                      </li>
+                    ) : null
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  );
+          <p className="mb-4 font-medium text-gray-700">Status: <span className="font-semibold">{booking.status}</span></p>
+          {booking.status === 'PENDING' && (
+            <button 
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+              onClick={() => acceptBooking(booking.id)}
+            >
+              Accept
+            </button>
+          )}
+        </div>
+      )
+    })}
+  </div>
+</div>
+
+);
 }
 
 export default CleanerLogedin;
+

@@ -38,7 +38,8 @@ model Service {
   id          String  @id @default(uuid())
   type        String  // e.g., "Furniture", "Rug", "Table"
   description String
-  bookings    Booking[]
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  bookingId   String
 }
 
 model Booking {
@@ -49,8 +50,7 @@ model Booking {
   cleaner    Cleaner?       @relation(fields: [cleanerId], references: [id])
   addressId  String
   address    Address        @relation(fields: [addressId], references: [id])
-  serviceId  String
-  service    Service        @relation(fields: [serviceId], references: [id])
+  services   Service[]  
   status     BookingStatus  @default(PENDING)
   createdAt  DateTime       @default(now())
 }
