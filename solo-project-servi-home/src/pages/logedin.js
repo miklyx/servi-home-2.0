@@ -11,6 +11,9 @@ function Logedin () {
     const [servicetable, setServicetable] = useState('');
     const [address, setAddress] = useState('');
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+
     const addService = (service) => {
       setServices([...services, service]);
     };
@@ -36,7 +39,8 @@ function Logedin () {
       const data = await response.json();
 
       if (response.ok) {
-        alert(data.message);
+        setModalMessage(data.message);
+        setIsModalOpen(true);;
         setServices([]);
         setRugmeasure('');
         setRugcondition('');
@@ -61,149 +65,179 @@ function Logedin () {
       setServices((prevServices) => prevServices.filter((_, i) => i !== index));
     };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalMessage('');
+    }
+
     return (
         <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 p-5 text-white">
-        <h2 className="text-4xl mb-5 font-semibold">Servi Home - Services</h2>
+        <div className="flex justify-center items-center h-screen">
+        <h2 className="text-6xl font-serif">Rediscover the charm <br></br>of your furniture. Let <br></br>us give it a fresh, pristine <br></br>makeover. Your home <br></br>deserves the best – and <br></br>so do you!</h2>
+        </div>
         <div className="overflow-x-auto">
           <div className="flex space-x-6">
             
-          <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
-            <h3 className="text-xl mb-4 font-semibold">Revitalize Your Rugs</h3>
-            <p className="text-sm mb-6">
-            Remove dirt, stains, and odors with precision. Advanced techniques and eco-friendly solutions. We restore the beauty and freshness of your rugs.
-            </p>
-            <label className="text-black-600">Measures:</label>
-            <select
+          <form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+    <h3 className="text-lg mb-6 text-center">Revitalize Your Rugs</h3>
+    <img src="/rugs.jpeg" alt="Mueble" width={150} height={150} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
+    
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Measures:</label>
+        <select
             name="measure"
             value={rugmeasure}
             onChange={(e) => setRugmeasure(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-            >
+        >
             <option value="options">Options</option>
             <option value="80*150 cm">80*150 cm</option>
             <option value="160*230 cm">160*230 cm</option>
             <option value="240*340 cm">240*340 cm</option>
-            </select>
-            <label className="text-black-600">Condition:</label>
-            <input
-                type="text"
-                name="title"
-                value={rugcondition}
-                onChange={(e) => setRugcondition(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-                required
-            />
-            <label className="text-black-600">Material:</label>
-            <input
-                type="text"
-                name="title"
-                value={material}
-                onChange={(e) => setMaterial(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-                required
-            />
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer "
-            onClick={(e) => {
-              e.preventDefault()
-                  addService({
-                    title: 'Revitalize Your Rugs',
-                    rugmeasure,
-                    rugcondition,
-                    measure: '',
-                    condition: '',
-                    material,
-                    servicetable: ''
-                  });
-                }}
-            >
-              +
-            </button>
-        </form>
-      
-        <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
-            <h3 className="text-xl mb-4 font-semibold">Renew Your Furniture</h3>
-            <p className="text-sm mb-6">
-            We go beyond surface cleaning, tackling deep-seated stains and allergens. Furniture will look fantastic also feeling fresh and inviting.
-            </p>
-            <label className="text-black-600">Seats:</label>
-            <select
+        </select>
+    </div>
+
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Condition:</label>
+        <input
+            type="text"
+            name="title"
+            value={rugcondition}
+            onChange={(e) => setRugcondition(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+            required
+        />
+    </div>
+
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Material:</label>
+        <input
+            type="text"
+            name="title"
+            value={material}
+            onChange={(e) => setMaterial(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+            required
+        />
+    </div>
+
+    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+        onClick={(e) => {
+            e.preventDefault();
+            addService({
+                title: 'Revitalize Your Rugs',
+                rugmeasure,
+                rugcondition,
+                measure: '',
+                condition: '',
+                material,
+                servicetable: ''
+            });
+        }}
+    >
+        Add to List
+    </button>
+</form>
+
+<form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+    <h3 className="text-lg mb-6 text-center">Renew Your Furniture</h3>
+    <img src="/mueble.webp" alt="Mueble" width={200} height={200} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
+    
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Seats:</label>
+        <select
             name="measure"
             value={measure}
             onChange={(e) => setMeasure(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-            >
+        >
             <option value="seats">Options</option>
             <option value="One">1 seat</option>
             <option value="Two">2 seats</option>
             <option value="Three">3 seats</option>
-            </select>
-            <label className="text-black-600">Condition:</label>
-            <select
+        </select>
+    </div>
+
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Condition:</label>
+        <select
             name="measure"
             value={condition}
             onChange={(e) => setCondition(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
             required
-            >
+        >
             <option value="Options">Options</option>
             <option value="Stained">Stained</option>
             <option value="Dirt">Dirt</option>
             <option value="Fabric change">Fabric change</option>
-            </select>
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={(e) => {
-              e.preventDefault()
-                  addService({
-                    title: 'Revitalize Your Rugs',
-                    rugmeasure,
-                    rugcondition,
-                    measure: '',
-                    condition: '',
-                    material,
-                    servicetable: ''
-                  });
-                }} >+</button>
-        </form>
+        </select>
+    </div>
 
-        <form className="bg-blue-300 border border-black p-6 rounded-lg w-full md:w-1/2 lg:w-1/3 relative text-black">
-            <h3 className="text-xl mb-4 font-semibold">Elevate Your Tabletops</h3>
-            <p className="text-sm mb-6">
-            We enhance your tables, making them stunning focal points by emphasizing the wood's richness with a lustrous finish.
-            </p>
-            <label className="text-black-600">Services:</label>
-            <select
-            name="measure"
+    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+        onClick={(e) => {
+            e.preventDefault();
+            addService({
+                title: 'Renew Your Furniture',
+                measure,
+                condition,
+                rugmeasure: '',  
+                rugcondition: '',  
+                material: '', 
+                servicetable: ''
+            });
+        }}
+    >
+        Add to List
+    </button>
+</form>
+
+<form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+    <h3 className="text-lg mb-6 text-center">Elevate Your Tabletops</h3>
+    <img src="/table.webp" alt="Table" width={150} height={150} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
+    
+    <div className="w-full">
+        <label className="block mb-2 text-black-600">Restoration:</label>
+        <select
+            name="servicetable"
             value={servicetable}
             onChange={(e) => setServicetable(e.target.value)}
             className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-            >
+        >
             <option value="Options">Options</option>
             <option value="Polish">Polish</option>
             <option value="Paint">Paint</option>
-            </select>
-            
-            <button className="absolute bottom-4 right-4 bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer" onClick={(e) => {
-              e.preventDefault()
-                  addService({
-                    title: 'Revitalize Your Rugs',
-                    rugmeasure,
-                    rugcondition,
-                    measure: '',
-                    condition: '',
-                    material,
-                    servicetable: ''
-                  });
-                }}
-                 >+</button>
-        </form>
+        </select>
+    </div>
+
+    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+        onClick={(e) => {
+            e.preventDefault();
+            addService({
+                title: 'Elevate Your Tabletops',
+                servicetable, 
+                rugmeasure: '',  
+                rugcondition: '',  
+                measure: '',  
+                condition: '',  
+                material: ''   
+            });
+        }}
+    >
+        Add to List
+    </button>
+</form>
+
+
             </div>
 
             {services.length > 0 && (
               <div className="m-4 border border-black p-6 rounded-lg relative">
-                <h1 className="text-4xl mb-5 font-semibold">Services Selected</h1>
+                <h1 className="text-4xl mb-5 font-semibold border-b pb-2">Services Selected</h1>
                 {services.map((service, index) => (
                   <div
                     key={index}
-                    className="bg-blue-500 p-4 rounded shadow-md m-4"
+                    className="bg-blue-500 p-4 rounded shadow-md my-4 flex justify-between items-center"
                   >
                     <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
                     {service.rugmeasure && <p className="text-gray-700">Measure: {service.rugmeasure}</p>}
@@ -214,13 +248,14 @@ function Logedin () {
                     {service.servicetable && <p className="text-gray-700">Services: {service.servicetable}</p>}
                     <button
                       onClick={() => handleDelete(index)}
-                      className="bg-yellow-500 text-white text-lg w-8 h-8 rounded-full cursor-pointer"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
                     >
-                      -
+                      Remove from List
                     </button>
                   </div>
             ))}
-            <label className="">Address: </label>
+            <div className='w-full mt-4'>
+            <label className="block mb-2 text-black-600">Address: </label>
             <input
                 type="text"
                 name="title"
@@ -229,13 +264,46 @@ function Logedin () {
                 className=" border border-black bg-transparent rounded focus:outline-none focus:border-blue-400 m-2"
                 required
             />
-            <p className="text-xs">A cleaner proposal will be sent to you, as soon as posible you will obtain an email for confirmation</p>
-            <button className='border border-black bg-transparent text-white hover:bg-blue-500 py-2 px-4 rounded m-4' onClick={(e) => handleSubmit(e)}>Send to cleaner</button>
+            </div>
+            <p className="text-xs mt-4">A cleaner proposal will be sent to you, as soon as posible you will obtain an email for confirmation</p>
+            <button className='mt-4 border border-black bg-transparent text-black hover:bg-blue-500 hover:text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105' 
+            onClick={(e) => handleSubmit(e)}>Send to cleaner</button>
             </div>
 
             )}
             
         </div>
+         {/* Modal Code */}
+         {isModalOpen && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+                        <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                            <div>
+                                <h3 className="text-lg leading-6 font-medium text-black">
+                                    Notification
+                                </h3>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        {modalMessage}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <button
+                                    type="button"
+                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-700"
+                                    onClick={closeModal}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
       </div>
     )
 }
