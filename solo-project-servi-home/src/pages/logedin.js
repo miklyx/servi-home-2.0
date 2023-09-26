@@ -14,6 +14,7 @@ function Logedin () {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
+    
     const addService = (service) => {
       setServices([...services, service]);
     };
@@ -69,7 +70,7 @@ function Logedin () {
         setIsModalOpen(false);
         setModalMessage('');
     }
-
+    
     return (
         <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 p-5 text-white">
         <div className="flex justify-center items-center h-screen">
@@ -252,6 +253,7 @@ function Logedin () {
                     >
                       Remove from List
                     </button>
+                    
                   </div>
             ))}
             <div className='w-full mt-4'>

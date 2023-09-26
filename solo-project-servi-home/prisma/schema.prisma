@@ -38,6 +38,7 @@ model Service {
   id          String  @id @default(uuid())
   type        String  // e.g., "Furniture", "Rug", "Table"
   description String
+  imageUrl    String?  
   booking     Booking  @relation(fields: [bookingId], references: [id])
   bookingId   String
 }

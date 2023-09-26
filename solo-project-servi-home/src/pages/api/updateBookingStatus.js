@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { sendEmail } from "../../lib/sendEmail";
 
 const prisma = new PrismaClient();
 
@@ -22,8 +23,8 @@ export default async (req, res) => {
       },
     });
 
+    await sendEmail(updatedBooking.user.email, 'Service Confirmation', 'A cleaner has accepted your service!');
     
-
 
     return res.status(200).json(updatedBooking);
   } catch (error) {
