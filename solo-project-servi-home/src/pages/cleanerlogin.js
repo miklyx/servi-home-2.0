@@ -50,47 +50,50 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-80">
-        <h2 className="text-2xl font-semibold mb-4">Cleaner Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-600">Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-600">Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
-              required
-            />
-          </div>
-          {error && <p className="text-red-600 mb-4">{error}</p>}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            Login
-          </button>
-        </form>
-        <p>
-          Don't have an account?{" "}
-          <Link href="/cleanersignup">Sign Up</Link>
-        </p>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-100">
+        <div className="bg-white p-10 rounded-lg shadow-2xl transform transition-transform hover:scale-105 w-96">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 tracking-tighter">Cleaner Login</h2>
+            
+            <form onSubmit={handleSubmit}>
+                <div className="mb-6">
+                    <label className="block text-gray-700 mb-2">Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full p-3 border text-black border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+                        required
+                    />
+                </div>
+                <div className="mb-6">
+                    <label className="block text-gray-700 mb-2">Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full p-3 border text-black border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+                        required
+                    />
+                </div>
+                {error && (
+                    <p className="text-red-600 mb-4 border-l-4 border-red-500 pl-3">{error}</p>
+                )}
+                <button
+                    type="submit"
+                    className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                >
+                    Login
+                </button>
+                <p className="mt-6 text-gray-600">
+                    Don't have an account?{" "}
+                    <Link href="/cleanersignup" className="text-green-600 hover:underline">Sign Up</Link>
+                </p>
+            </form>
+        </div>
     </div>
-  );
+);
 }
 
 export default Login;

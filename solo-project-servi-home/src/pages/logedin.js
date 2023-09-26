@@ -72,14 +72,14 @@ function Logedin () {
     }
     
     return (
-        <div className="bg-gradient-to-b from-yellow-500 to-zinc-500 p-5 text-white">
+        <div className="bg-gradient-to-b from-gray-200 to-gray-400 p-5 text-black min-h-screen">
         <div className="flex justify-center items-center h-screen">
-        <h2 className="text-6xl font-serif">Rediscover the charm <br></br>of your furniture. Let <br></br>us give it a fresh, pristine <br></br>makeover. Your home <br></br>deserves the best – and <br></br>so do you!</h2>
+        <h2 className="text-5xl font-serif leading-tight">Rediscover the charm <br></br>of your furniture. Let <br></br>us give it a fresh, pristine <br></br>makeover. Your home <br></br>deserves the best – and <br></br>so do you!</h2>
         </div>
         <div className="overflow-x-auto">
-          <div className="flex space-x-6">
+          <div className="flex space-x-6 justify-center">
             
-          <form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+          <form className="bg-white shadow-lg border border-gray-200 p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/4 relative text-black flex flex-col items-center space-y-4">
     <h3 className="text-lg mb-6 text-center">Revitalize Your Rugs</h3>
     <img src="/rugs.jpeg" alt="Mueble" width={150} height={150} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
     
@@ -122,7 +122,7 @@ function Logedin () {
         />
     </div>
 
-    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+    <button className="bg-blue-500 hover:bg-blue-600 border border-blue-500 text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-6"
         onClick={(e) => {
             e.preventDefault();
             addService({
@@ -140,7 +140,7 @@ function Logedin () {
     </button>
 </form>
 
-<form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+<form className="bg-white shadow-lg border border-gray-200 p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/4 relative text-black flex flex-col items-center space-y-4">
     <h3 className="text-lg mb-6 text-center">Renew Your Furniture</h3>
     <img src="/mueble.webp" alt="Mueble" width={200} height={200} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
     
@@ -175,7 +175,7 @@ function Logedin () {
         </select>
     </div>
 
-    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+    <button className="bg-blue-500 hover:bg-blue-600 border border-blue-500 text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-6"
         onClick={(e) => {
             e.preventDefault();
             addService({
@@ -193,7 +193,7 @@ function Logedin () {
     </button>
 </form>
 
-<form className="bg-blue-300 border border-black p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/3 relative text-black flex flex-col items-center space-y-4">
+<form className="bg-white shadow-lg border border-gray-200 p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/4 relative text-black flex flex-col items-center space-y-4">
     <h3 className="text-lg mb-6 text-center">Elevate Your Tabletops</h3>
     <img src="/table.webp" alt="Table" width={150} height={150} className="rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 border border-yellow-500 p-1"/>
     
@@ -211,7 +211,7 @@ function Logedin () {
         </select>
     </div>
 
-    <button className="bg-transparent border border-white text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-12"
+    <button className="bg-blue-500 hover:bg-blue-600 border border-blue-500 text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:rotate-6"
         onClick={(e) => {
             e.preventDefault();
             addService({
@@ -233,12 +233,12 @@ function Logedin () {
             </div>
 
             {services.length > 0 && (
-              <div className="m-4 border border-black p-6 rounded-lg relative">
+              <div className="m-6 bg-grey-500 shadow-lg border border-gray-200 p-6 rounded-lg relative">
                 <h1 className="text-4xl mb-5 font-semibold border-b pb-2">Services Selected</h1>
                 {services.map((service, index) => (
                   <div
                     key={index}
-                    className="bg-blue-500 p-4 rounded shadow-md my-4 flex justify-between items-center"
+                    className="bg-blue-200 p-4 rounded shadow-md my-4 flex justify-between items-center"
                   >
                     <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
                     {service.rugmeasure && <p className="text-gray-700">Measure: {service.rugmeasure}</p>}
@@ -249,7 +249,7 @@ function Logedin () {
                     {service.servicetable && <p className="text-gray-700">Services: {service.servicetable}</p>}
                     <button
                       onClick={() => handleDelete(index)}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                      className="mt-4 bg-blue-500 hover:bg-blue-600 border border-blue-500 text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
                     >
                       Remove from List
                     </button>
@@ -282,7 +282,7 @@ function Logedin () {
                         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
                             <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                         </div>
-                        <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                        <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl">
                             <div>
                                 <h3 className="text-lg leading-6 font-medium text-black">
                                     Notification

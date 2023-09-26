@@ -22,6 +22,7 @@ export default async (req, res) => {
         user: true,
       },
     });
+    
 
     await sendEmail(updatedBooking.user.email, 'Service Confirmation', 'A cleaner has accepted your service!');
     
