@@ -11,7 +11,7 @@ export default function Footer () {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
-                {/* Company Info */}
+                
                 <div>
                     <h3 className="text-2xl font-bold mb-4 tracking-tight">Servi Home</h3>
                     <address className="not-italic mb-4 text-gray-400">
@@ -23,7 +23,7 @@ export default function Footer () {
                     </address>
                 </div>
 
-                {/* Quick Links */}
+                
                 <div>
                     <h3 className="text-2xl font-bold mb-4 tracking-tight">Quick Links</h3>
                     <ul className="space-y-3 text-lg">
@@ -33,7 +33,7 @@ export default function Footer () {
                     </ul>
                 </div>
 
-                {/* Newsletter */}
+                
                 <div>
                     <h3 className="text-2xl font-bold mb-4 tracking-tight">Stay Updated</h3>
                     <p className="mb-6 text-gray-400">Subscribe to our newsletter for the latest updates:</p>
@@ -43,7 +43,7 @@ export default function Footer () {
                     </form>
                 </div>
 
-                {/* Social Links */}
+                
                 <div>
                     <h3 className="text-2xl font-bold mb-4 tracking-tight">Follow Us</h3>
                     <div className="flex space-x-6 text-3xl">
@@ -55,7 +55,7 @@ export default function Footer () {
 
             </div>
 
-            {/* Copyright */}
+            
             <div className="border-t border-gray-800 mt-12 pt-6 text-center text-gray-400">
                 <p>&copy; {new Date().getFullYear()} Servi Home. All rights reserved.</p>
             </div>

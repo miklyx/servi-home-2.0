@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Servi Home
+
+Efficiently connecting users to cleaners.
+
+Servi Home addresses the inconvenience and friction traditionally faced by users when booking cleaning services. Traditionally, users have to manually contact businesses, wait for replies, discuss availability, and specify needs. We transition this multi-step, manual, and unpredictable booking method into a seamless, user-friendly, digital experience. Our platform allows cleaners to directly accept user requests, sending immediate email notifications upon confirmation.
 
 ## Getting Started
 
-First, run the development server:
+To set up the Servi Home project on your local machine:
+
+Clone the repository
+
+```bash
+# Copy code
+git clone [repository_link]
+Navigate to the project directory and install dependencies
+```
+
+```bash
+# Copy code
+cd servi-home
+npm install
+#Setup the environment variables
+
+#Ensure you have your own database URL.
+#Set up your JWT secret for authentication.
+#Configure your email settings for the nodemailer functionality.
+#Run the development server
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun run dev
+#For the server setup, refer to the Server Repository. If you're looking at the server repository, #refer back to the Client Repository.
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Frontend: Next.js, React, TailwindCSS, Zustand
+Backend: Prisma, PostgreSQL, Supabase, Nodemailer
+Authentication: JWT, Bcrypt
+Contributors: Javier Villamizar (myself) - Lead Developer

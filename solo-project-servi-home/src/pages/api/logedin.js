@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async (req, res) => {
   if (req.method !== "POST") {
-    return res.status(405).end(); // Method Not Allowed if it's not a POST request
+    return res.status(405).end(); 
   }
 
   const { services, address, userId } = req.body;
@@ -47,7 +47,7 @@ export default async (req, res) => {
     console.error("Error saving order:", error);
     return res.status(500).json({ message: `Internal Server Error: ${error.message}` });
   } finally {
-    await prisma.$disconnect(); // Ensure prisma client is closed
+    await prisma.$disconnect(); 
   }
 };
 

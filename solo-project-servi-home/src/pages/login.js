@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router"; // Import the useRouter hook for redirection
+import { useRouter } from "next/router"; 
 import { useAuth } from "../lib/store";
 
 function Login() {
@@ -11,7 +11,7 @@ function Login() {
 
   const [error, setError] = useState(null);
 
-  const router = useRouter(); // Initialize the router
+  const router = useRouter(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +25,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Send the form data to your server for authentication
+      
       const response = await fetch("/api/login", {
         method: "POST",
         headers: {

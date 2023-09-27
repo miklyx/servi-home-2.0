@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router"; // Import the useRouter hook for redirection
+import { useRouter } from "next/router"; 
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Send the form data to your server for authentication
+      
       const response = await fetch("/api/cleanerlogin", {
         method: "POST",
         headers: {

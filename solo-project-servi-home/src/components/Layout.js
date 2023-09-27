@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
   return (
     <div className="bg-gray-900 font-sans text-gray-200">
         <header className="p-6 flex justify-between items-center">
-            {/* Logo and Brand Name */}
+            
             <div className="flex items-center space-x-4">
                 <img src="/home.png" alt="Logo" width={50} height={50} className="rounded shadow-lg transform hover:scale-105 transition-transform duration-200" />
                 <h1 className="text-4xl font-semibold text-yellow-500">Servi Home</h1>

@@ -62,7 +62,7 @@ function ReviewForm() {
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+                className="block w-full p-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-400"
                 required 
             />
         </div>
@@ -73,7 +73,7 @@ function ReviewForm() {
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+                className="block w-full p-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-400"
                 required 
             />
         </div>
@@ -83,7 +83,7 @@ function ReviewForm() {
                 name="content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 h-32 resize-none"
+                className="block w-full p-2 text-black border border-gray-300 rounded focus:outline-none focus:border-blue-400 h-32 resize-none"
                 required 
             ></textarea>
         </div>

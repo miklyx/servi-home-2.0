@@ -40,10 +40,10 @@ function CleanerSignUp() {
         setSuccess(true);
         setError(null);
 
-        // Save the token, for the sake of this example, we'll use local storage
+        
         localStorage.setItem('token', data.token);
 
-        // Redirect the user to the dashboard or some main page
+        
         router.push('/cleanerlogedin');
       } else {
         setError(data.error || "An error occurred during registration.");

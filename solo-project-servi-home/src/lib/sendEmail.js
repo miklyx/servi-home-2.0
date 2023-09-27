@@ -20,7 +20,7 @@ export const sendEmail = async () => {
   try {
     
     await transporter.sendMail({
-      from: `Servi Home <${email}>`,  // Adding company name to 'from'
+      from: `Servi Home <${email}>`,  
       to: email,
       subject: "Confirmation: Your Order Has Been Accepted",
       text: "Dear valued customer,\n\nWe're pleased to inform you that your order has been accepted. Our cleaner will be in touch with you shortly to finalize details and ensure a smooth service experience. Thank you for choosing Your Company Name.\n\nWarm regards,\nThe Your Company Name Team",
@@ -37,4 +37,4 @@ export const sendEmail = async () => {
     console.error("Error sending email:", error);
   }
 };
-// console.log(prisma.booking.user.email)⁄
+

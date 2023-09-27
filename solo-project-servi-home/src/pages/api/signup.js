@@ -17,7 +17,7 @@ export default async function handler(req, res) {
           email,
           password: hashedPassword,
         },
-        select: { id: true, email: true, username: true } // Explicitly select fields
+        select: { id: true, email: true, username: true } 
       });
 
       const token = sign({ userId: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
