@@ -5,37 +5,45 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const secretKey: string | undefined = process.env.JWT_SECRET;
 
+type User = {
+  id?: string;
+  email: string;
+  password?: string;
+  username: string;
+  createdAt?: Date;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!secretKey) {
-    return res.status(500).json({ error: 'JWT_SECRET not defined' });
-  }
   if (req.method === 'POST') {
     const { username, email, password } = req.body;
 
     try {
-      const hashedPassword = await hash(password, 10);
+      const hashedPassword: string = await hash(password, 10);
 
-      const user: { id: string; email: string; username: string } =
-        await db.user.create({
-          data: {
-            username,
-            email,
-            password: hashedPassword,
-          },
-          select: { id: true, email: true, username: true },
-        });
-
-      const token: string = sign({ userId: user.id }, secretKey, {
-        expiresIn: '1h',
+      const user: User = await db.user.create({
+        data: {
+          username,
+          email,
+          password: hashedPassword,
+        },
+        select: { id: true, email: true, username: true },
       });
 
-      res
-        .status(201)
-        .json({ message: 'User registered successfully', user, token });
-    } catch (error: any) {
+      //const token = sign({ userId: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
+      if (secretKey) {
+        const token: string = sign({ userId: user.id }, secretKey, {
+          expiresIn: '1h',
+        });
+        res
+          .status(201)
+          .json({ message: 'User registered successfully', user, token });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Unable to register user' });
     }

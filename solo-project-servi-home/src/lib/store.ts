@@ -4,6 +4,7 @@ interface Auth {
   setAuth: (auth: string) => void;
   removeAuth: () => void;
 }
+
 export const useAuth = create<Auth>((set) => ({
   auth: null,
   setAuth: (auth) => set(() => ({ auth })),
