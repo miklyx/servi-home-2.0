@@ -56,7 +56,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     return res.status(200).json({ message: 'Order successfully saved!' });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error saving order:', error);
     return res
       .status(500)
