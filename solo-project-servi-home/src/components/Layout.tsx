@@ -15,6 +15,7 @@ const Layout = ({
   const onLogout = (e: React.MouseEvent): void => {
     localStorage.removeItem('auth');
     localStorage.removeItem('token');
+    localStorage.removeItem('cleaner');
     useAuth.getState().removeAuth();
     useCleaner.getState().removeCleaner();
     router.push('/');
