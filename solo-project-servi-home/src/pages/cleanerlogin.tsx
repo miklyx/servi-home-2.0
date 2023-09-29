@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router"; 
+import { useRouter } from "next/router";
+import { useAuth } from "../lib/store"; 
 
 interface FormData {
   email: string;
@@ -42,8 +43,9 @@ function Login() : JSX.Element {
         body: JSON.stringify(formData),
       });
 
-      const data :LoginData = await response.json();
+      const data  = await response.json();
       localStorage.setItem("auth", JSON.stringify(data));
+      useAuth.getState().setAuth(data.cleaner);
 
       if (response.status === 200) {
         
