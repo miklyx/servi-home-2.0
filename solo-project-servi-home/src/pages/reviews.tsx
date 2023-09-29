@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Reviews } from '../types';
+import { useAuth } from '../lib/store';
 
 function ReviewForm(): JSX.Element {
   const [reviews, setReviews] = useState<Reviews[]>([]);
   const [title, setTitle] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const user = useAuth((state) => state.auth);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -53,7 +55,21 @@ function ReviewForm(): JSX.Element {
 
   return (
     <div className='bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen flex flex-col items-center justify-center p-4'>
-      <form
+      <div className='flex flex-col gap-4 mt-8 w-full max-w-2xl'>
+        {reviews.map((review, index) => (
+          <div
+            key={index}
+            className='bg-white p-4 rounded shadow-md border border-gray-200 transform transition-transform duration-300 hover:scale-102'
+          >
+            <h3 className='text-xl text-black font-semibold mb-2'>
+              {review.title}
+            </h3>
+            <p className='text-gray-800 font-medium'>{review.name}</p>
+            <p className='text-gray-700 mt-2'>{review.content}</p>
+          </div>
+        ))}
+      </div>
+      {user && <form
         onSubmit={handleSubmit}
         className='bg-white p-8 rounded-lg m-4 shadow-md max-w-md w-full transform transition-transform duration-300 hover:scale-105'
       >
@@ -98,21 +114,8 @@ function ReviewForm(): JSX.Element {
         >
           Submit Review
         </button>
-      </form>
-      <div className='flex flex-col gap-4 mt-8 w-full max-w-2xl'>
-        {reviews.map((review, index) => (
-          <div
-            key={index}
-            className='bg-white p-4 rounded shadow-md border border-gray-200 transform transition-transform duration-300 hover:scale-102'
-          >
-            <h3 className='text-xl text-black font-semibold mb-2'>
-              {review.title}
-            </h3>
-            <p className='text-gray-800 font-medium'>{review.name}</p>
-            <p className='text-gray-700 mt-2'>{review.content}</p>
-          </div>
-        ))}
-      </div>
+      </form>}
+      
     </div>
   );
 }
