@@ -3,7 +3,7 @@ import { hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const secretKey: string | undefined = process.env.JWT_SECRET;
+const secretKey: string | undefined | null = process.env.JWT_SECRET;
 
 type User = {
   id?: string;
