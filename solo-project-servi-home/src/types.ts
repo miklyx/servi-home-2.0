@@ -29,3 +29,22 @@ export interface Reviews {
   content: string;
   createdAt: Date;
 }
+
+export interface Auth {
+  user: string;
+  pass: string;
+}
+
+export interface Transporter {
+  service: string;
+  port?: number;
+  secure?: boolean;
+  auth: Auth;
+}
+export interface MailOptions {
+  from: string | undefined;
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}

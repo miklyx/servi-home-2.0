@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-promisify": "^1.1.7",
     "next": "13.5.1",
+    "node-mailjet": "^6.0.4",
     "nodemailer": "^6.9.5",
     "postcss": "8.4.30",
     "react": "18.2.0",

@@ -31,7 +31,6 @@ function Logedin(): JSX.Element {
     e.preventDefault();
     const localAuthData: string | null = localStorage.getItem('auth');
     const auth = localAuthData ? JSON.parse(localAuthData) : null;
-    console.log(auth);
 
     const response: Response = await fetch('/api/logedin', {
       method: 'POST',
@@ -42,6 +41,7 @@ function Logedin(): JSX.Element {
         services: services,
         address: address,
         userId: auth.id,
+        userEmail: auth.email,
       }),
     });
 
