@@ -24,8 +24,6 @@ export default async function handler(
           },
           select: { id: true, email: true, username: true },
         });
-      //deleted role
-      //const token = sign({ cleanerId: cleaner.id, role: cleaner.role }, secretKey, { expiresIn: "1h" });
       const token: string = sign(
         { cleanerId: cleaner.id },
         secretKey as string,
