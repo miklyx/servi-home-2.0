@@ -7,7 +7,7 @@ describe('Footer', () => {
   it('hover of "About Us"', () => {
     render(<Footer />);
     const myElem = screen.getByText('Subscribe');
-    console.log(myElem);
+    
 
     expect(myElem).toBeInTheDocument();
   });
