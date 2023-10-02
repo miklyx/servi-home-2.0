@@ -1,11 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+//import { PrismaClient } from '@prisma/client';
+import { db } from '../../lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { sendEmailConfirmation } from '../../lib/sendEmail';
 import { MailOptions } from '../../types';
 
 const email: string | undefined = process.env.EMAIL;
 
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -17,8 +18,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   function generateServicesHTML(services: any) {
     return services
       .map((service: any) => {
-        // Create HTML for each service here
-        // Example:
         if (service.title === 'Revitalize Your Rugs') {
           return `
         <div>
@@ -76,7 +75,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const createdAddress: { id: string; detail: string; userId: string } =
-      await prisma.address.create({
+      await db.address.create({
         data: {
           detail: address,
           userId: userId,
@@ -90,7 +89,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       addressId: string;
       status: string;
       createdAt: Date;
-    } = await prisma.booking.create({
+    } = await db.booking.create({
       data: {
         userId: userId,
         addressId: createdAddress.id,
@@ -116,7 +115,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         ]),
       };
 
-      await prisma.service.create({ data: serviceData });
+      await db.service.create({ data: serviceData });
     }
     sendEmailConfirmation(mailOptions);
 
@@ -127,6 +126,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       .status(500)
       .json({ message: `Internal Server Error: ${error.message}` });
   } finally {
-    await prisma.$disconnect();
+    await db.$disconnect();
   }
 };

@@ -6,9 +6,14 @@ import '@testing-library/jest-dom';
 describe('Footer and its main component exist', () => {
   it('Footer esxists"', () => {
     render(<Footer />);
+<<<<<<< HEAD
     const myElem = screen.getByTestId('footer');
     expect(myElem).toBeInTheDocument();
   });
+=======
+    const myElem = screen.getByText('Subscribe');
+    
+>>>>>>> origin/tests/miklyx
 
   it('Servi Home Container esxists"', () => {
     render(<Footer />);
