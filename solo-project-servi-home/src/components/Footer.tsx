@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className='bg-gray-900 text-white py-16'>
+    <footer className='bg-gray-900 text-white py-16' data-testid='footer'>
       <div className='container mx-auto px-6 lg:px-16 space-y-12' id='mainDom'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12'>
-          <div>
+          <div data-testid='servi-home-container'>
             <h3 className='text-2xl font-bold mb-4 tracking-tight'>
               Servi Home
             </h3>
@@ -21,26 +21,34 @@ export default function Footer(): JSX.Element {
             </address>
           </div>
 
-          <div>
+          <div data-testid='quick-links-container'>
             <h3 className='text-2xl font-bold mb-4 tracking-tight'>
               Quick Links
             </h3>
             <ul className='space-y-3 text-lg'>
               <li>
-                <button className='hover:underline'>About Us</button>
+                <button className='hover:underline test-hover-underline'>
+                  About Us
+                </button>
               </li>
-              <li>
-                <Link href='/services' className='hover:underline'>
+              <li data-testid='services-link'>
+                <a
+                  data-testid='services-link-link'
+                  href='/services'
+                  className='hover:underline test-hover-underline'
+                >
                   Services
-                </Link>
+                </a>
               </li>
               <li>
-                <button className='hover:underline'>Contact</button>
+                <button className='hover:underline test-hover-underline'>
+                  Contact
+                </button>
               </li>
             </ul>
           </div>
 
-          <div>
+          <div data-testid='stay-updated-container'>
             <h3 className='text-2xl font-bold mb-4 tracking-tight'>
               Stay Updated
             </h3>
@@ -62,7 +70,7 @@ export default function Footer(): JSX.Element {
             </form>
           </div>
 
-          <div>
+          <div data-testid='follow-us-container'>
             <h3 className='text-2xl font-bold mb-4 tracking-tight'>
               Follow Us
             </h3>

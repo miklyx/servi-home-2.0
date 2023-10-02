@@ -3,6 +3,7 @@ interface Auth {
   auth: string | null;
   setAuth: (auth: string) => void;
   removeAuth: () => void;
+  getState?: () => Auth;
 }
 
 interface Cleaner {
@@ -19,6 +20,6 @@ export const useAuth = create<Auth>((set) => ({
 
 export const useCleaner = create<Cleaner>((set) => ({
   cleaner: null,
-  setCleaner: (cleaner) => set(() => ({cleaner})),
-  removeCleaner: () => set(({cleaner: null}))
+  setCleaner: (cleaner) => set(() => ({ cleaner })),
+  removeCleaner: () => set({ cleaner: null }),
 }));
