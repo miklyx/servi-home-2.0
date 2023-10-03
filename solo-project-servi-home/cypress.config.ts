@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 import { db } from './src/lib/db';
 import { hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { User } from './src/types';
+import { User, BookingDataSingle } from './src/types';
 
 export default defineConfig({
   e2e: {
@@ -12,7 +12,7 @@ export default defineConfig({
       on('task', {
         clearUser: async (user) => {
           // Delete the user based on stored information
-          console.log(user);
+
           await db.user.delete({
             where: {
               email: user.email,
@@ -34,13 +34,61 @@ export default defineConfig({
           });
           return createdUser;
         },
-        login: (createdUser) => {
-          cy.task('seedDatabase', createdUser);
-          cy.visit('http://localhost:3000/login');
-          cy.get('input[name="email"]').type(createdUser.email);
-          cy.get('input[name="password"]').type(createdUser.password as string);
-          cy.get('button').contains('Login').click();
-          cy.location('pathname').should('eq', '/logedin');
+
+        clearBooking: async () => {
+          //extract address id
+
+          const bookingData: BookingDataSingle | null =
+            await db.booking.findFirst({
+              select: {
+                id: true,
+                userId: true,
+                addressId: true,
+                status: true,
+                createdAt: true,
+              },
+              orderBy: {
+                createdAt: 'asc',
+              },
+            });
+
+          alert(bookingData);
+
+          if (bookingData) {
+            // const service: {id:string}[] = await db.service.findMany({
+            //   select: {
+            //     id: true,
+            //   },
+            //   where: {
+            //     bookingId: bookingData.id
+
+            //   }
+            // });
+
+            db.service.deleteMany({
+              where: {
+                bookingId: bookingData.id,
+              },
+            });
+
+            db.address.delete({
+              where: {
+                id: bookingData.addressId,
+              },
+            });
+            db.booking.delete({
+              where: {
+                id: bookingData.id,
+              },
+            });
+
+            // Handle the case where bookingData is not null
+          } else {
+            console.log('No booking data found.');
+            // Handle the case where bookingData is null
+          }
+
+          return null;
         },
       });
     },

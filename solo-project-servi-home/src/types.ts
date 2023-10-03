@@ -6,6 +6,7 @@ export interface BookingData {
     username: string;
     createdAt: Date;
   };
+
   address: {
     id: string;
     detail: string;
@@ -20,6 +21,14 @@ export interface BookingData {
   }[];
   id?: string | null | undefined;
   status?: string;
+}
+
+export interface BookingDataSingle {
+  id: string;
+  userId: string;
+  addressId: string;
+  status: string;
+  createdAt: Date;
 }
 
 export interface Reviews {

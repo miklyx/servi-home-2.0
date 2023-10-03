@@ -119,7 +119,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     sendEmailConfirmation(mailOptions);
 
-    return res.status(200).json({ message: 'Order successfully saved!' });
+    return res
+      .status(200)
+      .json({ message: 'Order successfully saved!', booking: booking });
   } catch (error: any) {
     console.error('Error saving order:', error);
     return res

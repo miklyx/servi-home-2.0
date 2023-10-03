@@ -103,7 +103,7 @@ function Logedin(): JSX.Element {
             <div className='w-full'>
               <label className='block mb-2 text-black-600'>Measures:</label>
               <select
-                name='measure'
+                name='measures'
                 value={rugmeasure}
                 onChange={(e) => setRugmeasure(e.target.value)}
                 className='block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400'
@@ -119,7 +119,7 @@ function Logedin(): JSX.Element {
               <label className='block mb-2 text-black-600'>Condition:</label>
               <input
                 type='text'
-                name='title'
+                name='condition'
                 value={rugcondition}
                 onChange={(e) => setRugcondition(e.target.value)}
                 className='block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400'
@@ -131,7 +131,7 @@ function Logedin(): JSX.Element {
               <label className='block mb-2 text-black-600'>Material:</label>
               <input
                 type='text'
-                name='title'
+                name='material'
                 value={material}
                 onChange={(e) => setMaterial(e.target.value)}
                 className='block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400'
@@ -153,6 +153,7 @@ function Logedin(): JSX.Element {
                   servicetable: '',
                 });
               }}
+              name='addtolist1'
             >
               Add to List
             </button>
@@ -171,7 +172,7 @@ function Logedin(): JSX.Element {
             <div className='w-full'>
               <label className='block mb-2 text-black-600'>Seats:</label>
               <select
-                name='measure'
+                name='seats'
                 value={measure}
                 onChange={(e) => setMeasure(e.target.value)}
                 className='block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400'
@@ -186,7 +187,7 @@ function Logedin(): JSX.Element {
             <div className='w-full'>
               <label className='block mb-2 text-black-600'>Condition:</label>
               <select
-                name='measure'
+                name='condition'
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
                 className='block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400'
@@ -213,6 +214,7 @@ function Logedin(): JSX.Element {
                   servicetable: '',
                 });
               }}
+              name='addtolist2'
             >
               Add to List
             </button>
@@ -256,6 +258,7 @@ function Logedin(): JSX.Element {
                   material: '',
                 });
               }}
+              name='addtolist3'
             >
               Add to List
             </button>
@@ -309,7 +312,7 @@ function Logedin(): JSX.Element {
               <label className='block mb-2 text-black-600'>Address: </label>
               <input
                 type='text'
-                name='title'
+                name='address'
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className=' border border-black bg-transparent rounded focus:outline-none focus:border-blue-400 m-2'
@@ -323,6 +326,7 @@ function Logedin(): JSX.Element {
             <button
               className='mt-4 border border-black bg-transparent text-black hover:bg-blue-500 hover:text-white py-2 px-4 rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105'
               onClick={(e: any) => handleSubmit(e)}
+              name='sendtocleaner'
             >
               Send to cleaner
             </button>
