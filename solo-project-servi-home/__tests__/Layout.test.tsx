@@ -8,6 +8,18 @@ import '@testing-library/jest-dom';
 const useRouter = jest.spyOn(require('next/router'), 'useRouter');
 
 
+describe('Layout overall', () => {
+
+  const children = <div>Some text</div>
+  it.failing('should render correctly', () => {
+    const { getByText } = render(<Layout children={children}/>);
+    //expect(1).toBe(1)
+    expect(getByText('Home')).toBeInTheDocument();
+    expect(getByText("Reviews")).toBeInTheDocument();
+  });
+});
+
+
 describe('Layout elements', () => {
   const children = <div>Some text</div>
 
@@ -24,7 +36,7 @@ describe('Layout elements', () => {
 
 
 
-  it('NOT WORKING: should render the correct navigation links for a logged-in user', () => {
+  it.failing('should render the correct navigation links for a logged-in user', () => {
     const user = {
         id: 1,
         name: 'John Doe',
@@ -35,9 +47,9 @@ describe('Layout elements', () => {
         <Layout children={children}/>
       </UserContext.Provider>
       );
-      expect(1).toBe(1)
-    //expect(getByText('Orders Dashboard')).toBeInTheDocument();
-    //expect(queryByText('Log Out')).toBeInTheDocument();
+      //expect(1).toBe(1)
+    expect(getByText('Orders Dashboard')).toBeInTheDocument();
+    expect(queryByText('Log Out')).toBeInTheDocument();
   });
 
   it('should render the correct navigation links', () => {
