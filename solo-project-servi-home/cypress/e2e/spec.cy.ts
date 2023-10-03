@@ -31,30 +31,25 @@ context('app functionalirt', async () => {
   });
 
   it('loggs in the user', () => {
-    // cy.task('seedDatabase', createdUser);
     cy.visit('http://localhost:3000/login');
     cy.get('input[name="email"]').type(createdUser.email);
     cy.get('input[name="password"]').type(createdUser.password as string);
     cy.get('button').contains('Login').click();
     cy.location('pathname').should('eq', '/logedin');
-    // cy.task('clearUser', createdUser);
   });
 
   it('loggs in and loggs out the user', () => {
     cy.visit('http://localhost:3000/login');
-    // cy.task('seedDatabase', createdUser);
     cy.get('input[name="email"]').type(createdUser.email);
     cy.get('input[name="password"]').type(createdUser.password as string);
     cy.get('button').contains('Login').click();
     cy.location('pathname').should('eq', '/logedin');
     cy.get('button').contains('Log Out').click();
     cy.location('pathname').should('eq', '/');
-    // cy.task('clearUser', createdUser);
   });
 
   it('loggs in and creates and order', () => {
     cy.visit('http://localhost:3000/login');
-    // cy.task('seedDatabase', createdUser);
     cy.get('input[name="email"]').type(createdUser.email);
     cy.get('input[name="password"]').type(createdUser.password as string);
     cy.get('button').contains('Login').click();
