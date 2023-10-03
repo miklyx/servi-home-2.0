@@ -9,7 +9,7 @@ const Layout = ({
   children: React.ReactElement;
 }): JSX.Element => {
   const user = useAuth((state) => state.auth);
-  const cleaner = useCleaner((state) => state.cleaner)
+  const cleaner = useCleaner((state) => state.cleaner);
   const router = useRouter();
 
   const onLogout = (e: React.MouseEvent): void => {
@@ -55,41 +55,40 @@ const Layout = ({
           >
             Services
           </Link>
-          
-          { !!cleaner ? (
+
+          {!!cleaner ? (
             <>
-            <button
-              onClick={(e) => onLogout(e)}
-              className='bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors duration-200'
-            >
-              Log Out
-            </button>
-                        
+              <button
+                onClick={(e) => onLogout(e)}
+                className='bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors duration-200'
+              >
+                Log Out
+              </button>
+
               <Link
-              href='/cleanerlogedin'
-              className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'
+                href='/cleanerlogedin'
+                className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'
               >
                 Cleaner Dashboard
-            </Link>
+              </Link>
             </>
-
-           ) : user?  (
+          ) : user ? (
             <>
-            <button
-              onClick={(e) => onLogout(e)}
-              className='bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors duration-200'
-            >
-              Log Out
-            </button>
-                        
+              <button
+                onClick={(e) => onLogout(e)}
+                className='bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors duration-200'
+              >
+                Log Out
+              </button>
+
               <Link
-              href='/logedin'
-              className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'
+                href='/logedin'
+                className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'
               >
                 Orders Dashboard
-            </Link>
+              </Link>
             </>
-            ) : (
+          ) : (
             <>
               <Link
                 href='/cleanerlogin'
@@ -97,7 +96,7 @@ const Layout = ({
               >
                 Cleaner Log In
               </Link>
-              
+
               <Link
                 href='/login'
                 className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'
@@ -106,7 +105,6 @@ const Layout = ({
               </Link>
             </>
           )}
-          
         </nav>
       </header>
       <main className='mt-8'>{children}</main>

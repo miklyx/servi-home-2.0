@@ -1,5 +1,9 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import * as React from 'react';
 import { BookingData } from '../types';
+import Map from '../components/Map/index.js';
+
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 
 function CleanerLogedin(): JSX.Element {
   const [bookings, setBookings] = useState<BookingData[]>([]);
@@ -55,67 +59,71 @@ function CleanerLogedin(): JSX.Element {
       <div className='overflow-x-auto'>
         {bookings.map((booking, index: number): JSX.Element => {
           return (
-            <div
-              key={index}
-              className='bg-white m-4 shadow-lg border-t-4 border-blue-500 p-6 rounded-lg relative transform transition-transform duration-300 hover:scale-105'
-            >
-              <h3 className='text-2xl font-semibold mb-4 tracking-normal'>
-                Booking #{index + 1}
-              </h3>
-              <p className='mb-2 font-medium text-gray-700'>
-                Client: {booking.user.username}
-              </p>
-              <p className='mb-4 font-medium text-gray-700'>
-                Address: {booking.address.detail}
-              </p>
-              <div className='mb-4'>
-                <strong className='text-xl'>Services:</strong>
-                {booking.services.map(
-                  (service, idx: number): JSX.Element => (
-                    <div key={idx} className='mt-2 text-gray-800'>
-                      <strong className='text-lg underline'>
-                        {service.type}
-                      </strong>
-                      <ul className='list-disc list-inside pl-5'>
-                        {JSON.parse(service.description).map(
-                          (
-                            descItem: {
-                              attribute: string;
-                              value: string | null;
-                            },
-                            descIdx: number
-                          ): JSX.Element | null =>
-                            descItem.value ? (
-                              <li key={descIdx} className='mt-1'>
-                                {descItem.attribute}: {descItem.value}
-                              </li>
-                            ) : null
-                        )}
-                      </ul>
-                    </div>
-                  )
+            <div className='flex flex-row bg-white m-4 shadow-lg border-t-4 border-blue-500 p-6 rounded-lg relative transform transition-transform duration-300 hover:scale-105  justify-between'>
+              <div key={index} className=''>
+                ;
+                <h3 className='text-2xl font-semibold mb-4 tracking-normal'>
+                  Booking #{index + 1}
+                </h3>
+                <p className='mb-2 font-medium text-gray-700'>
+                  Client: {booking.user.username}
+                </p>
+                <p className='mb-4 font-medium text-gray-700'>
+                  Address: {booking.address.detail}
+                </p>
+                <div className='mb-4'>
+                  <strong className='text-xl'>Services:</strong>
+                  {booking.services.map(
+                    (service, idx: number): JSX.Element => (
+                      <div key={idx} className='mt-2 text-gray-800'>
+                        <strong className='text-lg underline'>
+                          {service.type}
+                        </strong>
+                        <ul className='list-disc list-inside pl-5'>
+                          {JSON.parse(service.description).map(
+                            (
+                              descItem: {
+                                attribute: string;
+                                value: string | null;
+                              },
+                              descIdx: number
+                            ): JSX.Element | null =>
+                              descItem.value ? (
+                                <li key={descIdx} className='mt-1'>
+                                  {descItem.attribute}: {descItem.value}
+                                </li>
+                              ) : null
+                          )}
+                        </ul>
+                      </div>
+                    )
+                  )}
+                </div>
+                <p className='mb-4 font-medium text-gray-700'>
+                  Status:
+                  <span
+                    className={`font-semibold ${
+                      booking.status === 'PENDING'
+                        ? 'text-yellow-500'
+                        : 'text-green-500'
+                    }`}
+                  >
+                    {booking.status}
+                  </span>
+                </p>
+                {booking.status === 'PENDING' && (
+                  <button
+                    className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200 transform hover:scale-105'
+                    onClick={() => booking.id && acceptBooking(booking.id)}
+                  >
+                    Accept
+                  </button>
                 )}
               </div>
-              <p className='mb-4 font-medium text-gray-700'>
-                Status:
-                <span
-                  className={`font-semibold ${
-                    booking.status === 'PENDING'
-                      ? 'text-yellow-500'
-                      : 'text-green-500'
-                  }`}
-                >
-                  {booking.status}
-                </span>
-              </p>
-              {booking.status === 'PENDING' && (
-                <button
-                  className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200 transform hover:scale-105'
-                  onClick={() => booking.id && acceptBooking(booking.id)}
-                >
-                  Accept
-                </button>
-              )}
+              <div className='flex items-center mr-60'>
+                {' '}
+                <Map X={51.5} Y={0} />
+              </div>
             </div>
           );
         })}
