@@ -48,44 +48,31 @@ export default defineConfig({
                 createdAt: true,
               },
               orderBy: {
-                createdAt: 'asc',
+                createdAt: 'desc',
               },
             });
-
-          alert(bookingData);
+          console.log(bookingData);
 
           if (bookingData) {
-            // const service: {id:string}[] = await db.service.findMany({
-            //   select: {
-            //     id: true,
-            //   },
-            //   where: {
-            //     bookingId: bookingData.id
-
-            //   }
-            // });
-
-            db.service.deleteMany({
+            await db.service.deleteMany({
               where: {
                 bookingId: bookingData.id,
               },
             });
 
-            db.address.delete({
-              where: {
-                id: bookingData.addressId,
-              },
-            });
-            db.booking.delete({
+            await db.booking.delete({
               where: {
                 id: bookingData.id,
               },
             });
 
-            // Handle the case where bookingData is not null
+            await db.address.delete({
+              where: {
+                id: bookingData.addressId,
+              },
+            });
           } else {
             console.log('No booking data found.');
-            // Handle the case where bookingData is null
           }
 
           return null;

@@ -3,7 +3,7 @@ import { User } from '../../src/types';
 let createdUser: User;
 createdUser = {
   username: 'test23',
-  email: 'test43@gmail.com',
+  email: 'test58@gmail.com',
   password: '11111',
 };
 
@@ -60,15 +60,15 @@ context('app functionalirt', async () => {
     cy.get('button').contains('Login').click();
     cy.location('pathname').should('eq', '/logedin');
     cy.get('select[name="measures"]').select('80*150 cm');
-    cy.get('input[name="condition"]').type('good');
-    cy.get('input[name="material"]').type('silk');
+    cy.get('input[name="condition"]').type('xcgood');
+    cy.get('input[name="material"]').type('xzcsilk');
     cy.get('button[name="addtolist1"').contains('Add to List').click();
     cy.get('select[name="seats"]').select('1 seat');
     cy.get('select[name="condition"]').select('Stained');
     cy.get('button[name="addtolist2"').contains('Add to List').click();
     cy.get('select[name="servicetable"]').select('Polish');
     cy.get('button[name="addtolist3"').contains('Add to List').click();
-    cy.get('input[name="address"').type('Berlin Potsdamer Platz');
+    cy.get('input[name="address"').type('TESTBerlin Potsdamer Platz');
     cy.get('button[name="sendtocleaner"]').click();
     cy.task('clearBooking');
   });
