@@ -2,16 +2,9 @@ import { db } from '../../lib/db';
 import { hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { User } from '../../types';
 
 const secretKey: string | undefined | null = process.env.JWT_SECRET;
-
-type User = {
-  id?: string;
-  email: string;
-  password?: string;
-  username: string;
-  createdAt?: Date;
-};
 
 export default async function handler(
   req: NextApiRequest,
