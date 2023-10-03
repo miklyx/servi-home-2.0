@@ -48,3 +48,11 @@ export interface MailOptions {
   text: string;
   html?: string;
 }
+
+export interface User {
+  id?: string;
+  email: string;
+  password?: string;
+  username: string;
+  createdAt?: Date;
+}
