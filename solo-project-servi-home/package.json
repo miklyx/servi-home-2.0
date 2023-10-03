@@ -9,9 +9,9 @@
     "lint": "next lint",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "test:api": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest -i && docker:down",
+    "test:api": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest -i && npm run docker:down",
     "test": "jest",
-    "prisma": "prisma migrate deploy", 
+    "prisma": "prisma migrate deploy",
     "test:watch": "jest  --watchAll"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "cloudinary": "^1.40.0",
     "D": "^1.0.0",
     "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-promisify": "^1.1.7",
     "next": "13.5.1",
