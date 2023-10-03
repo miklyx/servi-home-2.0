@@ -93,36 +93,33 @@ describe('Logedin Integration Tests', () => {
   });
 
   it('should create a new service in the database', async () => {
-    const testData = {
-      bookingId: 'booking789',
-      type: 'Revitalize Your Rugs',
-      description: JSON.stringify([
-        { attribute: 'rugmeasure', value: '5x7' },
-        { attribute: 'rugcondition', value: 'Good' },
-      ]),
-    };
+    const booking = await prisma.booking.findFirst();
 
-    const createdService = {
-      bookingId: 'booking789',
-      type: 'Revitalize Your Rugs',
-      description: JSON.stringify([
-        { attribute: 'rugmeasure', value: '5x7' },
-        { attribute: 'rugcondition', value: 'Good' },
-      ]),
-    };
-    //await db.service.create({
-     // data: {
-     //   bookingId: 'booking789',
-     //   type: 'Revitalize Your Rugs',
-     //   description: JSON.stringify([
-     //     { attribute: 'rugmeasure', value: '5x7' },
-     //     { attribute: 'rugcondition', value: 'Good' },
-     //   ]),
-     // },
-    //});
+    if (booking) {
+    
+      const testData = {
+        bookingId: booking.id,
+        type: 'Revitalize Your Rugs',
+        description: JSON.stringify([
+          { attribute: 'rugmeasure', value: '5x7' },
+          { attribute: 'rugcondition', value: 'Good' },
+        ]),
+      };
 
-    expect(createdService.bookingId).toBe(testData.bookingId);
-    expect(createdService.type).toBe(testData.type);
-    expect(createdService.description).toBe(testData.description);
+      const createdService = await prisma.service.create({
+        data: {
+          bookingId: booking.id,
+          type: 'Revitalize Your Rugs',
+          description: JSON.stringify([
+           { attribute: 'rugmeasure', value: '5x7' },
+           { attribute: 'rugcondition', value: 'Good' },
+         ]),
+       },
+      });
+
+      expect(createdService.bookingId).toBe(testData.bookingId);
+      expect(createdService.type).toBe(testData.type);
+      expect(createdService.description).toBe(testData.description);
+    }
   });
 });
