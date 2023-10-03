@@ -11,6 +11,7 @@
     "docker:down": "docker-compose down",
     "test:api": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest -i && npm run docker:down",
     "test": "jest",
+    "coverage-report": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest --collect-coverage && npm run docker:down",
     "prisma": "prisma migrate deploy",
     "test:watch": "jest  --watchAll"
   },
