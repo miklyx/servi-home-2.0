@@ -137,15 +137,15 @@ function Logedin(): JSX.Element {
 
   return (
     <div className='bg-gradient-to-b from-gray-200 to-gray-400 p-5 text-black min-h-screen'>
-      <div className='flex justify-center items-center h-screen'>
+      {/* <div className='flex justify-center items-center h-screen'>
         <h2 className='text-5xl font-serif leading-tight'>
           Rediscover the charm <br></br>of your furniture. Let <br></br>us give
           it a fresh, pristine <br></br>makeover. Your home <br></br>deserves
           the best – and <br></br>so do you!
         </h2>
-      </div>
-      <div className='overflow-x-auto'>
-        <div className='flex space-x-6 justify-center'>
+      </div> */}
+      <div className='overflow-x-auto mt-10'>
+        <div className='flex space-x-6 justify-center mb-10'>
           <form className='bg-white shadow-lg border border-gray-200 p-6 rounded-lg mx-2 w-full md:w-1/2 lg:w-1/4 relative text-black flex flex-col items-center space-y-4'>
             <h3 className='text-lg mb-6 text-center'>Revitalize Your Rugs</h3>
             <img

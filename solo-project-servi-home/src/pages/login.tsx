@@ -40,6 +40,8 @@ function Login(): JSX.Element {
 
       const data = await response.json();
       localStorage.setItem('auth', JSON.stringify(data.user));
+      localStorage.setItem('token', JSON.stringify(data.token));
+
       useAuth.getState().setAuth(data.user);
 
       if (response.status === 200) {

@@ -1,16 +1,34 @@
 import Link from 'next/link';
 import { useAuth, useCleaner } from '../lib/store';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Layout = ({
   children,
 }: {
   children: React.ReactElement;
 }): JSX.Element => {
+  const [token, setToken] = useState<string | null>(null);
+
   const user = useAuth((state) => state.auth);
   const cleaner = useCleaner((state) => state.cleaner);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      const storedToken = localStorage.getItem('token');
+      setToken(storedToken ?? null);
+
+      //Redirect logic
+      if (!storedToken && router.pathname.endsWith('/cleanerlogedin')) {
+        router.push('/cleanerlogin');
+      }
+
+      if (!storedToken && router.pathname.endsWith('/logedin')) {
+        router.push('/login');
+      }
+    }
+  }, [token, router.pathname]);
 
   const onLogout = (e: React.MouseEvent): void => {
     localStorage.removeItem('auth');
@@ -49,6 +67,7 @@ const Layout = ({
           >
             Reviews
           </Link>
+
           <Link
             href='/services'
             className='hover:text-yellow-500 transform hover:scale-105 transition-transform duration-200'

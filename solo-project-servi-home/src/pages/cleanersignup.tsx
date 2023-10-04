@@ -44,7 +44,7 @@ function CleanerSignUp(): JSX.Element {
         setSuccess(true);
         setError(null);
 
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', JSON.stringify(data.token));
 
         router.push('/cleanerlogedin');
       } else {

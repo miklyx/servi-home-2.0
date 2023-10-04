@@ -12,9 +12,9 @@ export default function Map({ X, Y }: { X: number; Y: number }): JSX.Element {
   });
   return (
     <MapContainer
-      className={style.map}
+      className={`${style.map} rounded-full`}
       center={[X, Y]}
-      zoom={13}
+      zoom={15}
       scrollWheelZoom={true}
     >
       <TileLayer

@@ -6,12 +6,12 @@ export default function Principal(): JSX.Element {
     <div className='font-serif'>
       <div className='bg-gradient-to-r from-zinc-500 to-zinc-600 flex-row p-12 justify-around items-center h-screen text-white flex'>
         <div className='flex flex-col justify-center space-y-8'>
-          <h1 className='text-6xl font-bold leading-tight'>
+          <p className='text-5xl leading-tight'>
             Transform your space <br />
             into a haven of cleanliness <br />
             and freshness.
-          </h1>
-          <h2 className='text-4xl'>Your comfort, our priority.</h2>
+          </p>
+          <p className='text-3xl'>Your comfort, our priority.</p>
           <button className='bg-yellow-500 text-2xl flex items-center justify-center text-black px-8 py-3 rounded-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl relative'>
             <Link className='hover:underline' href='/signup'>
               Schedule your cleaner

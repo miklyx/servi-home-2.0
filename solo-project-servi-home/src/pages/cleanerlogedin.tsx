@@ -121,7 +121,9 @@ function CleanerLogedin(): JSX.Element {
               </div>
               <div className='flex items-center mr-60'>
                 {' '}
-                <Map X={51.5} Y={0} />
+                <div className='relative w-81 h-81 rounded-full shadow-2xl border-4 border-yellow-500 overflow-hidden z-10'>
+                  <Map X={51.5} Y={0} />
+                </div>
               </div>
             </div>
           );

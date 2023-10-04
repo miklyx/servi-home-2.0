@@ -46,6 +46,7 @@ function SignUp(): JSX.Element {
         setError(null);
 
         localStorage.setItem('token', JSON.stringify(data.token));
+
         localStorage.setItem('auth', JSON.stringify(data.user));
         useAuth.getState().setAuth(data.user);
 
