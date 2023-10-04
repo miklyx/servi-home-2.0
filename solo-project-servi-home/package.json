@@ -16,6 +16,8 @@
     "test:watch": "jest  --watchAll"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
     "@prisma/client": "^5.3.1",
     "autoprefixer": "10.4.15",
     "bcrypt": "^5.1.1",
@@ -23,6 +25,7 @@
     "D": "^1.0.0",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-promisify": "^1.1.7",
     "next": "13.5.1",
