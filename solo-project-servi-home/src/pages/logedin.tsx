@@ -1,6 +1,11 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { getDistrictsOfBerlin, getStreetsByIndex, getStreets, addressAutocomplete } from '../lib/addressService';
+import {
+  getDistrictsOfBerlin,
+  getStreetsByIndex,
+  getStreets,
+  addressAutocomplete,
+} from '../lib/addressService';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 interface Service {
@@ -13,8 +18,8 @@ interface Service {
   material: string;
 }
 
-function classNames(...classes:any) {
-  return classes.filter(Boolean).join(' ')
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(' ');
 }
 
 function Logedin(): JSX.Element {
@@ -31,11 +36,12 @@ function Logedin(): JSX.Element {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
-  const [selectedDistrict, setSelectedDistrict] = useState<string>(districts[0]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(
+    districts[0]
+  );
   const [index, setIndex] = useState<number>();
   const [streets, setStreets] = useState<string[]>([]);
   const [addressList, setAddressList] = useState<any[]>([]);
-
 
   const addService = (service: any) => {
     setServices([...services, service]);
@@ -46,20 +52,36 @@ function Logedin(): JSX.Element {
     return currentStreets
   } */
 
-  const handleIndexChange = (e:any) => {
+  const handleIndexChange = (e: any) => {
     const newIndex = e.target.value;
     setIndex(newIndex);
-    const currentStreets:any = getStreets(parseInt(newIndex))
+    const currentStreets: any = getStreets(parseInt(newIndex));
     setStreets(currentStreets);
   };
 
-  const handleAddressChange = (e:any) => {
+  const handleAddressChange = async (e: any) => {
     const newAddress = e.target.value;
-    setAddress(newAddress)
-    const newAddressList : any =  addressAutocomplete(newAddress);
-    setAddressList(newAddressList)
+    setAddress(newAddress);
+  };
 
-  }
+  useEffect(() => {
+    let isMounted = true; // Flag to track whether the component is mounted or not
+
+    const fetchData = async () => {
+      const newAddressList: any[] = await addressAutocomplete(address);
+      if (isMounted) {
+        setAddressList(newAddressList);
+      }
+    };
+
+    if (address !== '' && isMounted) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false; // Clean up: set isMounted to false when the component is unmounted
+    };
+  }, [address]);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -345,13 +367,25 @@ function Logedin(): JSX.Element {
             <div className='w-full mt-4'>
               <label className='block mb-2 text-black-600'>Address: </label>
               <input
+                list='address'
                 type='text'
                 name='address'
                 value={address}
-                onChange={handleAddressChange}/* {(e) => setAddress(e.target.value)} */
+                onChange={
+                  handleAddressChange
+                } /* {(e) => setAddress(e.target.value)} */
                 className=' border border-black bg-transparent rounded focus:outline-none focus:border-blue-400 m-2'
                 required
               />
+
+              <datalist id='address'>
+                {addressList.map((oneaddress: any) => (
+                  <option
+                    key={oneaddress.properties.address_line1}
+                    value={oneaddress.properties.address_line1}
+                  />
+                ))}
+              </datalist>
               {/* <label>Found  </label>
                 <input list="Berlin-addresses" name="Addresss"/>
                 {addressList && 
@@ -497,7 +531,6 @@ function Logedin(): JSX.Element {
         </div>
       )}
     </div>
-    
   );
 }
 
