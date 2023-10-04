@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import style from '../styles/Cleaner.module.css';
 
 export default function Principal(): JSX.Element {
   return (
@@ -11,19 +12,24 @@ export default function Principal(): JSX.Element {
             and freshness.
           </h1>
           <h2 className='text-4xl'>Your comfort, our priority.</h2>
-          <button className='bg-yellow-500 text-2xl flex items-center justify-center text-black px-8 py-3 rounded-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
+          <button className='bg-yellow-500 text-2xl flex items-center justify-center text-black px-8 py-3 rounded-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl relative'>
             <Link className='hover:underline' href='/signup'>
               Schedule your cleaner
             </Link>
           </button>
         </div>
-        <img
-          src='/cleaning.png'
-          alt='Cleaning'
-          width={750}
-          height={750}
-          className='rounded-full shadow-2xl hover:scale-105 transform transition-transform duration-300 border-4 border-yellow-500 p-1'
-        />
+        <div className='rounded-full shadow-2xl hover:scale-105 transform transition-transform duration-300 border-4 border-yellow-500 p-1'>
+          <img
+            className={`${style.image} ${style.customcursor}`}
+            src='/cleaning.png'
+            alt='Cleaning'
+          />
+          <img
+            className={`${style.upperimage} h-full`}
+            src='/cleanerhand.png'
+            alt='Cleaninghand'
+          />
+        </div>
       </div>
 
       <div className='bg-zinc-400 p-12 flex justify-center text-white'>

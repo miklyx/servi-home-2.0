@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import * as React from 'react';
 import { BookingData } from '../types';
-import Map from '../components/Map/index.js';
+import Map from '../components/Map/index';
 
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 
@@ -61,7 +61,6 @@ function CleanerLogedin(): JSX.Element {
           return (
             <div className='flex flex-row bg-white m-4 shadow-lg border-t-4 border-blue-500 p-6 rounded-lg relative transform transition-transform duration-300 hover:scale-105  justify-between'>
               <div key={index} className=''>
-                ;
                 <h3 className='text-2xl font-semibold mb-4 tracking-normal'>
                   Booking #{index + 1}
                 </h3>

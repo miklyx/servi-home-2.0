@@ -1,10 +1,9 @@
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Icon } from 'leaflet';
-
 import style from '../../styles/Map.module.css';
 
-export default function Map({ X, Y }) {
+export default function Map({ X, Y }: { X: number; Y: number }): JSX.Element {
   const customIcon = new Icon({
     iconUrl: '/icons8-maps-48.png',
     iconSize: [20, 20],
@@ -15,7 +14,7 @@ export default function Map({ X, Y }) {
     <MapContainer
       className={style.map}
       center={[X, Y]}
-      zoom={12}
+      zoom={13}
       scrollWheelZoom={true}
     >
       <TileLayer
