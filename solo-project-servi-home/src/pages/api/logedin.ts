@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end();
   }
 
-  const { services, address, userId, userEmail } = req.body;
+  const { services, address, latitude, longitude, userId, userEmail } = req.body;
 
   const servicesHTML = generateServicesHTML(services);
 
@@ -35,11 +35,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   };
 
   try {
-    const createdAddress: { id: string; detail: string; userId: string } =
+    const createdAddress: { id: string; detail: string; latitude: number; longitude: number; userId: string } =
       await db.address.create({
         data: {
           detail: address,
-          userId: userId,
+          latitude: latitude,
+          longitude: longitude,
+          userId: userId
         },
       });
 

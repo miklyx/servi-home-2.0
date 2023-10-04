@@ -1,12 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
+import React, { useState, useEffect } from 'react';
 import {
   getDistrictsOfBerlin,
-  getStreetsByIndex,
-  getStreets,
   addressAutocomplete,
 } from '../lib/addressService';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 interface Service {
   title: string;
@@ -16,10 +12,6 @@ interface Service {
   measure: string;
   rugcondition: string;
   material: string;
-}
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
 }
 
 function Logedin(): JSX.Element {
@@ -32,62 +24,76 @@ function Logedin(): JSX.Element {
   const [condition, setCondition] = useState<string>('');
   const [material, setMaterial] = useState<string>('');
   const [servicetable, setServicetable] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-
+  const [addressData, setAddress] = useState<{addressString:string, coordinates:{latitude: number, longitude: number}}>({
+    addressString: '',
+    coordinates: {
+      latitude: 50.991515781089774, 
+      longitude: 7.956821953017896
+    }
+  });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
-  const [selectedDistrict, setSelectedDistrict] = useState<string>(
-    districts[0]
-  );
-  const [index, setIndex] = useState<number>();
-  const [streets, setStreets] = useState<string[]>([]);
   const [addressList, setAddressList] = useState<any[]>([]);
-
+  const [coordinates, setCoordinates] = useState<{latitude: number, longitude:number}>({latitude:50.991515781089774, longitude:7.956821953017896})
+  console.log('coordinates from coordinates')
+  console.log(coordinates);
   const addService = (service: any) => {
     setServices([...services, service]);
   };
 
-  /* const StreetList = (currentIndex:number) => {
-    const currentStreets: any = getStreets(currentIndex)
-    return currentStreets
-  } */
-
-  const handleIndexChange = (e: any) => {
-    const newIndex = e.target.value;
-    setIndex(newIndex);
-    const currentStreets: any = getStreets(parseInt(newIndex));
-    setStreets(currentStreets);
-  };
-
   const handleAddressChange = async (e: any) => {
     const newAddress = e.target.value;
-    setAddress(newAddress);
+    setAddress((prevAddressData) => ({
+      ...prevAddressData,
+      addressString: newAddress
+    }))
+    
+    const selectedAddress = addressList.find((address) =>{
+    const currentAddress = address.properties.address_line1 + ' ' + address.properties.address_line2;
+    return currentAddress === newAddress
+    }
+  );
+
+  if (selectedAddress) {
+    console.log('coordinates from address')
+    console.log(selectedAddress.geometry.coordinates)
+    const newCoordinates = {
+      latitude: selectedAddress.geometry.coordinates[1],
+      longitude: selectedAddress.geometry.coordinates[0],
+    }
+    setCoordinates(newCoordinates);
+  } else {
+    setCoordinates({latitude:0, longitude:0})
+  }
   };
 
   useEffect(() => {
-    let isMounted = true; // Flag to track whether the component is mounted or not
+    let isMounted = true; 
 
     const fetchData = async () => {
-      const newAddressList: any[] = await addressAutocomplete(address);
+      const newAddressList: any[] = await addressAutocomplete(addressData.addressString);
       if (isMounted) {
         setAddressList(newAddressList);
       }
     };
 
-    if (address !== '' && isMounted) {
+    if (addressData.addressString !== '' && isMounted) {
       fetchData();
     }
 
     return () => {
-      isMounted = false; // Clean up: set isMounted to false when the component is unmounted
+      isMounted = false; 
     };
-  }, [address]);
+  }, [addressData.addressString]);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const localAuthData: string | null = localStorage.getItem('auth');
-    const auth = localAuthData ? JSON.parse(localAuthData) : null;
+    console.log('coordinates on submit')
+    console.log(coordinates)
+    // if no coordinates - get them
 
+    const auth = localAuthData ? JSON.parse(localAuthData) : null;
     const response: Response = await fetch('/api/logedin', {
       method: 'POST',
       headers: {
@@ -95,7 +101,9 @@ function Logedin(): JSX.Element {
       },
       body: JSON.stringify({
         services: services,
-        address: address,
+        address: addressData.addressString,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
         userId: auth.id,
         userEmail: auth.email,
       }),
@@ -113,7 +121,13 @@ function Logedin(): JSX.Element {
       setCondition('');
       setMaterial('');
       setServicetable('');
-      setAddress('');
+      setAddress({
+        addressString: '',
+        coordinates: {
+          latitude: 50.991515781089774, 
+          longitude: 7.956821953017896
+        }
+      });
     } else {
       alert('Error: ' + data.message);
     }
@@ -125,6 +139,11 @@ function Logedin(): JSX.Element {
     setMaterial('');
     setServicetable('');
   };
+  const handleCoordinates = (value:any) => {
+    console.log('setting new coordinated')
+    console.log(value)
+    //setCoordinates({latitude:value.geometry.cordinates[0], longitude: value.geometry.coordinates[1]})
+  }
 
   const handleDelete = (index: number) => {
     setServices((prevServices) => prevServices.filter((_, i) => i !== index));
@@ -370,119 +389,32 @@ function Logedin(): JSX.Element {
                 list='address'
                 type='text'
                 name='address'
-                value={address}
+                value={addressData.addressString}
                 onChange={
                   handleAddressChange
                 } /* {(e) => setAddress(e.target.value)} */
-                className=' border border-black bg-transparent rounded focus:outline-none focus:border-blue-400 m-2'
+                className=' rounded border bg-transparent w-[50vw] m-2 border-black'
                 required
               />
 
-              <datalist id='address'>
+               <datalist 
+                id='address'
+                >  
+                {/*<select 
+                  onChange={handleCoordinates}
+              > */}
                 {addressList.map((oneaddress: any) => (
                   <option
-                    key={oneaddress.properties.address_line1}
-                    value={oneaddress.properties.address_line1}
-                  />
-                ))}
-              </datalist>
-              {/* <label>Found  </label>
-                <input list="Berlin-addresses" name="Addresss"/>
-                {addressList && 
-                <datalist id="Berlin-addresses">
-                  {addressList.map((adr) => (
-                  <option key={adr.properties.name} value={adr.properties.name}></option>
-                ))}
-                </datalist>} */}
-            </div>
-            {/*-------BEGIN---------EXPERIMENTAL -- DROPDOWN LIST */}
-            {/* <div>
-              <Listbox value={selectedDistrict} onChange={setSelectedDistrict}>
-                {({ open }) => (
-                  <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Listbox.Label>
-                  <div className="relative mt-2">
-                  <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                    <span className="flex items-center">
-                      <span className="ml-3 block truncate">{selectedDistrict}</span>
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                    </span>
-                  </Listbox.Button>
-                  
-                  <Transition
-                    show={open}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
+                    key={oneaddress.properties.place_id}
+                    value={oneaddress.properties.address_line1+ ' ' + oneaddress.properties.address_line2}
+                    /* onClick={() => handleCoordinates(oneaddress)} */
                   >
-                  
-                    <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                      {districts.map((district) => (
-                        <Listbox.Option 
-                            key={district} 
-                            value={district}
-                            className={({ active }) =>
-                              classNames(
-                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                'relative cursor-default select-none py-2 pl-3 pr-9'
-                                )
-                              }
-                              >
-                              {({ selected, active }) => (
-                          <>
-                            <div className="flex items-center">
-                              <span
-                                className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
-                              >
-                                {district}
-                              </span>
-                            </div>
-
-                            {selected ? (
-                              <span
-                                className={classNames(
-                                  active ? 'text-white' : 'text-indigo-600',
-                                  'absolute inset-y-0 right-0 flex items-center pr-4'
-                                )}
-                              >
-                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                        </Listbox.Option>
-                      ))}
-                      </Listbox.Options>
-                  </Transition>
-                  </div>
-                </>
-              )}
-              </Listbox>
-            </div> */}
-            {/*------END-------EXPERIMENTAL -- DROPDOWN LIST */}
-
-            {/*------START-------EXPERIMENTAL -- HTML INPUT */}
-            {/* <div>
-                <label>District  </label>
-                <input list="Berlin-districts" name="District"/>
-                <datalist id="Berlin-districts">
-                  {districts.map((district) => (
-                  <option key={district} value={district}></option>
+                  </option>
                 ))}
-                </datalist>
-                <label>Index  </label>
-                <input 
-                  type="text"
-                  value={index}
-                  onChange={handleIndexChange}>
-                </input>
-                <label>Street  </label>
-                {addressList[2]}
-            </div> */}
-            {/*------END-------EXPERIMENTAL -- HTML INPUT */}
+               {/* </select> */}
+                </datalist> 
+            </div>
+            
 
             <p className='text-xs mt-4'>
               A cleaner proposal will be sent to you, as soon as posible you
