@@ -103,8 +103,18 @@ function Logedin(): JSX.Element {
           longitude: gotCoordinates.longitude,
         },
       }));
+      coordinates.latitude = gotCoordinates.latitude
+      coordinates.longitude = gotCoordinates.longitude
 
       console.log(addressData)
+    } else {
+      setAddress((prevAddressData) => ({
+        ...prevAddressData,
+        coordinates: {
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        },
+      }));
     }
 
     const auth = localAuthData ? JSON.parse(localAuthData) : null;
@@ -116,8 +126,8 @@ function Logedin(): JSX.Element {
       body: JSON.stringify({
         services: services,
         address: addressData.addressString,
-        latitude: addressData.coordinates.latitude,
-        longitude: addressData.coordinates.longitude,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
         userId: auth.id,
         userEmail: auth.email,
       }),
