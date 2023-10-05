@@ -33,8 +33,6 @@ function Logedin(): JSX.Element {
   const [modalMessage, setModalMessage] = useState<string>('');
   const [addressList, setAddressList] = useState<any[]>([]);
   const [coordinates, setCoordinates] = useState<{latitude: number, longitude:number}>({latitude:50.991515781089774, longitude:7.956821953017896})
-  console.log('coordinates from coordinates')
-  console.log(coordinates);
   const addService = (service: any) => {
     setServices([...services, service]);
   };
@@ -85,6 +83,29 @@ function Logedin(): JSX.Element {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const localAuthData: string | null = localStorage.getItem('auth');
+    console.log('coordinates on start submit')
+    console.log(coordinates)
+
+    if (coordinates.latitude===0 && coordinates.longitude===0) {
+      const fullAddress: any[] = await addressAutocomplete(addressData.addressString);
+      console.log(fullAddress)
+
+      const gotCoordinates = {
+        latitude: fullAddress[0].geometry.coordinates[1],
+        longitude: fullAddress[0].geometry.coordinates[0],
+      }
+      console.log(fullAddress[0].geometry.coordinates[1])
+
+      setAddress((prevAddressData) => ({
+        ...prevAddressData,
+        coordinates: {
+          latitude: gotCoordinates.latitude,
+          longitude: gotCoordinates.longitude,
+        },
+      }));
+
+      console.log(addressData)
+    }
 
     const auth = localAuthData ? JSON.parse(localAuthData) : null;
     const response: Response = await fetch('/api/logedin', {
@@ -95,8 +116,8 @@ function Logedin(): JSX.Element {
       body: JSON.stringify({
         services: services,
         address: addressData.addressString,
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
+        latitude: addressData.coordinates.latitude,
+        longitude: addressData.coordinates.longitude,
         userId: auth.id,
         userEmail: auth.email,
       }),
