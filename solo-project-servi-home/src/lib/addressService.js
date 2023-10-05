@@ -36,107 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDistrictsOfBerlin = exports.addressAutocomplete = exports.getStreets = exports.getStreetsByIndex = void 0;
-//import { JSDOM } from 'jsdom' 
+exports.getDistrictsOfBerlin = exports.addressAutocomplete = void 0;
 var districts = require('./berlinDistricts.json');
-var getCountries = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var response, rawCountriesList, countries;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch('https://restcountries.com/v3.1/all')];
-            case 1:
-                response = _a.sent();
-                if (!response.ok) {
-                    throw new Error('Unable to fetch countries');
-                }
-                return [4 /*yield*/, response.json()];
-            case 2:
-                rawCountriesList = _a.sent();
-                countries = rawCountriesList.map(function (country) { return country.name.common; });
-                return [2 /*return*/, countries];
-        }
-    });
-}); };
-var getCities = function (country) { return __awaiter(void 0, void 0, void 0, function () {
-    var response, rawCities, cities;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch('https://countriesnow.space/api/v0.1/countries/cities', {
-                    method: 'POST',
-                    body: JSON.stringify({ 'country': country })
-                })];
-            case 1:
-                response = _a.sent();
-                return [4 /*yield*/, response.json()];
-            case 2:
-                rawCities = _a.sent();
-                cities = rawCities.data;
-                return [2 /*return*/, cities];
-        }
-    });
-}); };
-var getStreetsByIndex = function (index) { return __awaiter(void 0, void 0, void 0, function () {
-    var streetsUrl, streetsRaw, streetsText, streets, e_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                streetsUrl = 'https://germany-streets.openalfa.com/streets?q=';
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, fetch("".concat(streetsUrl).concat(index))];
-            case 2:
-                streetsRaw = _a.sent();
-                return [4 /*yield*/, streetsRaw.text()];
-            case 3:
-                streetsText = _a.sent();
-                streets = [];
-                //streets = document.querySelector(streetsText).querySelectorAll("a");
-                return [2 /*return*/, streets
-                    //const entryElements = dom.window.document.querySelectorAll('.entry');
-                    /* entryElements.forEach((entry:any) => {
-                      const linkElement : HTMLAnchorElement | null = entry.querySelector('a');
-                      if (linkElement) {
-                        if (linkElement.textContent) {
-                          const street = linkElement.textContent.trim();
-                          streets.push(street);
-                        }
-                      }
-                    });
-                
-                    return streets;*/
-                ];
-            case 4:
-                e_1 = _a.sent();
-                console.log(e_1);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getStreetsByIndex = getStreetsByIndex;
-var getStreets = function (index) { return __awaiter(void 0, void 0, void 0, function () {
-    var response, body, regex, streets;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch("https://germany-streets.openalfa.com/streets?q=".concat(index))];
-            case 1:
-                response = _a.sent();
-                return [4 /*yield*/, response.text()];
-            case 2:
-                body = _a.sent();
-                regex = /<a href="(.*?)">(.*?)<\/a>/;
-                streets = body.split("\n").map(function (line) {
-                    var match = regex.exec(line);
-                    if (match) {
-                        return match[2];
-                    }
-                });
-                return [2 /*return*/, streets];
-        }
-    });
-}); };
-exports.getStreets = getStreets;
 var addressAutocomplete = function (address) { return __awaiter(void 0, void 0, void 0, function () {
     var url, apiKey, response, body, addressList;
     return __generator(this, function (_a) {
@@ -153,15 +54,12 @@ var addressAutocomplete = function (address) { return __awaiter(void 0, void 0, 
                 addressList = body.features.map(function (adr) {
                     return adr;
                 });
-                console.log(addressList);
                 return [2 /*return*/, addressList];
         }
     });
 }); };
 exports.addressAutocomplete = addressAutocomplete;
-//getStreets().then((streets) => console.log(streets));
 var getDistrictsOfBerlin = function () {
     return districts.districts;
 };
 exports.getDistrictsOfBerlin = getDistrictsOfBerlin;
-//console.log(getDistrictsOfBerlin())

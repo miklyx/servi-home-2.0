@@ -1,4 +1,3 @@
-//import { PrismaClient } from '@prisma/client';
 import { db } from '../../lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { sendEmailConfirmation } from '../../lib/sendEmail';
@@ -7,14 +6,12 @@ import generateServicesHTML from '../../lib/generateServicesHTML';
 
 const email: string | undefined = process.env.EMAIL;
 
-//const prisma = new PrismaClient();
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(405).end();
   }
 
-  const { services, address, userId, userEmail } = req.body;
+  const { services, address, latitude, longitude, userId, userEmail } = req.body;
 
   const servicesHTML = generateServicesHTML(services);
 
@@ -35,11 +32,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   };
 
   try {
-    const createdAddress: { id: string; detail: string; userId: string } =
+    const createdAddress: { id: string; detail: string; latitude: number; longitude: number; userId: string } =
       await db.address.create({
         data: {
           detail: address,
-          userId: userId,
+          latitude: latitude,
+          longitude: longitude,
+          userId: userId
         },
       });
 

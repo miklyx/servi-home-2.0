@@ -29,6 +29,8 @@ model Cleaner {
 model Address {
   id      String   @id @default(uuid())
   detail  String   // Full address details
+  latitude Float?   @default(0)
+  longitude Float?  @default(0)
   userId  String
   user    User     @relation(fields: [userId], references: [id])
   bookings Booking[]
