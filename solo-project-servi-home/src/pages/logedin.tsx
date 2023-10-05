@@ -15,8 +15,6 @@ interface Service {
 }
 
 function Logedin(): JSX.Element {
-  const districts = getDistrictsOfBerlin();
-
   const [services, setServices] = useState<Service[]>([]);
   const [rugmeasure, setRugmeasure] = useState<string>('');
   const [measure, setMeasure] = useState<string>('');
@@ -55,8 +53,6 @@ function Logedin(): JSX.Element {
   );
 
   if (selectedAddress) {
-    console.log('coordinates from address')
-    console.log(selectedAddress.geometry.coordinates)
     const newCoordinates = {
       latitude: selectedAddress.geometry.coordinates[1],
       longitude: selectedAddress.geometry.coordinates[0],
@@ -89,9 +85,6 @@ function Logedin(): JSX.Element {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const localAuthData: string | null = localStorage.getItem('auth');
-    console.log('coordinates on submit')
-    console.log(coordinates)
-    // if no coordinates - get them
 
     const auth = localAuthData ? JSON.parse(localAuthData) : null;
     const response: Response = await fetch('/api/logedin', {
@@ -139,11 +132,6 @@ function Logedin(): JSX.Element {
     setMaterial('');
     setServicetable('');
   };
-  const handleCoordinates = (value:any) => {
-    console.log('setting new coordinated')
-    console.log(value)
-    //setCoordinates({latitude:value.geometry.cordinates[0], longitude: value.geometry.coordinates[1]})
-  }
 
   const handleDelete = (index: number) => {
     setServices((prevServices) => prevServices.filter((_, i) => i !== index));
@@ -392,7 +380,7 @@ function Logedin(): JSX.Element {
                 value={addressData.addressString}
                 onChange={
                   handleAddressChange
-                } /* {(e) => setAddress(e.target.value)} */
+                } 
                 className=' rounded border bg-transparent w-[50vw] m-2 border-black'
                 required
               />
@@ -400,18 +388,16 @@ function Logedin(): JSX.Element {
                <datalist 
                 id='address'
                 >  
-                {/*<select 
-                  onChange={handleCoordinates}
-              > */}
+                
                 {addressList.map((oneaddress: any) => (
                   <option
                     key={oneaddress.properties.place_id}
                     value={oneaddress.properties.address_line1+ ' ' + oneaddress.properties.address_line2}
-                    /* onClick={() => handleCoordinates(oneaddress)} */
+                    
                   >
                   </option>
                 ))}
-               {/* </select> */}
+               
                 </datalist> 
             </div>
             

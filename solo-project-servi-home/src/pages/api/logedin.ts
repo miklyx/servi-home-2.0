@@ -1,4 +1,3 @@
-//import { PrismaClient } from '@prisma/client';
 import { db } from '../../lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { sendEmailConfirmation } from '../../lib/sendEmail';
@@ -6,8 +5,6 @@ import { MailOptions } from '../../types';
 import generateServicesHTML from '../../lib/generateServicesHTML';
 
 const email: string | undefined = process.env.EMAIL;
-
-//const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
