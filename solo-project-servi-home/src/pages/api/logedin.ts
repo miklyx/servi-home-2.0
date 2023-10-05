@@ -11,14 +11,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end();
   }
 
-  const { services, address, latitude, longitude, userId, userEmail } = req.body;
+  const { services, address, latitude, longitude, userId, userEmail } =
+    req.body;
 
   const servicesHTML = generateServicesHTML(services);
 
   const mailOptions: MailOptions = {
     from: `Servi Home <${email}>`,
     to: userEmail,
-    subject: 'Subject',
+    subject: `Order Confirmation from ${new Date()}`,
     text: "Dear valued customer,\n\nWe're pleased to inform you that we received your order.",
     html: `
            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 5px;">
@@ -32,15 +33,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   };
 
   try {
-    const createdAddress: { id: string; detail: string; latitude: number; longitude: number; userId: string } =
-      await db.address.create({
-        data: {
-          detail: address,
-          latitude: latitude,
-          longitude: longitude,
-          userId: userId
-        },
-      });
+    const createdAddress: {
+      id: string;
+      detail: string;
+      latitude: number;
+      longitude: number;
+      userId: string;
+    } = await db.address.create({
+      data: {
+        detail: address,
+        latitude: latitude,
+        longitude: longitude,
+        userId: userId,
+      },
+    });
 
     const booking: {
       id: string;

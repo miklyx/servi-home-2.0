@@ -122,7 +122,10 @@ function CleanerLogedin(): JSX.Element {
               <div className='flex items-center mr-60'>
                 {' '}
                 <div className='relative w-81 h-81 rounded-full shadow-2xl border-4 border-yellow-500 overflow-hidden z-10'>
-                  <Map X={51.5} Y={0} />
+                  <Map
+                    X={booking.address.latitude}
+                    Y={booking.address.longitude}
+                  />
                 </div>
               </div>
             </div>
