@@ -9,8 +9,9 @@
     "lint": "next lint",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "test:api": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest -i && npm run docker:down",
+    "test:api": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest -i && npm run docker:down && npm run cypress-test",
     "test": "jest",
+    "cypress-test": "npx cypress run",
     "coverage-report": "npm run docker:up && sleep 5 && npm run prisma migrate deploy && jest --collect-coverage && npm run docker:down",
     "prisma": "prisma migrate deploy",
     "test:watch": "jest  --watchAll"
