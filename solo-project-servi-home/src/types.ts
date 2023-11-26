@@ -10,8 +10,8 @@ export interface BookingData {
   address: {
     id: string;
     detail: string;
-    latitude: number;
-    longitude: number;
+    latitude?: number;
+    longitude?: number;
     userId: string;
   };
   services: {
