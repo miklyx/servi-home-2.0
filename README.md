@@ -2,7 +2,12 @@
 
 Efficiently connecting users to cleaners.
 
+[Try it! (demo deployed on Vercel)](https://servihome-demo-miklyxs-projects.vercel.app)
+
+
 Servi Home addresses the inconvenience and friction traditionally faced by users when booking cleaning services. Traditionally, users have to manually contact businesses, wait for replies, discuss availability, and specify needs. We transition this multi-step, manual, and unpredictable booking method into a seamless, user-friendly, digital experience. Our platform allows cleaners to directly accept user requests, sending immediate email notifications upon confirmation.
+
+
 
 ## How it looks
 
