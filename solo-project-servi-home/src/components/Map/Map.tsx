@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import style from '../../styles/Map.module.css';
 
-export default function Map({ X, Y }: { X: number; Y: number }): JSX.Element {
+export default function Map({ X, Y }: { X: number | null | undefined; Y: number | null | undefined }): JSX.Element {
   const customIcon = new Icon({
     iconUrl: '/icons8-maps-48.png',
     iconSize: [20, 20],
@@ -11,6 +11,8 @@ export default function Map({ X, Y }: { X: number; Y: number }): JSX.Element {
     // popupAnchor: [-0, -76]
   });
   return (
+    <div>
+    {X && Y && (
     <MapContainer
       className={`${style.map} rounded-full`}
       center={[X, Y]}
@@ -23,5 +25,7 @@ export default function Map({ X, Y }: { X: number; Y: number }): JSX.Element {
       />
       <Marker icon={customIcon} position={[X, Y]}></Marker>
     </MapContainer>
+    )}
+    </div>
   );
 }
