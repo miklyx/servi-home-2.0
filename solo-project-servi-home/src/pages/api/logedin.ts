@@ -36,8 +36,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const createdAddress: {
       id: string;
       detail: string;
-      latitude: number;
-      longitude: number;
+      latitude?: number | null;
+      longitude?: number | null;
       userId: string;
     } = await db.address.create({
       data: {
