@@ -1,4 +1,14 @@
-export default function Card({ card }) {
+type CardProps = {
+  card: {
+    id: number;
+    title: string;
+    alt: string;
+    image: string;
+    description: string;
+  };
+};
+
+export default function Card({ card }: CardProps): JSX.Element {
   return (
     <div>
       <div className="min-h-full bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:shadow-xl hover:-translate-y-2">
